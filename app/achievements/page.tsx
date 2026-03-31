@@ -55,7 +55,7 @@ export default function AchievementsPage() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {achievements.map((item) => {
             const IconComp = iconMap[item.icon] || Award;
             return (
@@ -64,31 +64,31 @@ export default function AchievementsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="p-10 rounded-[40px] bg-white/5 border border-white/10 hover:border-blue-500/20 transition-all shadow-2xl flex flex-col justify-between h-full"
+                  className="p-5 md:p-10 rounded-[24px] md:rounded-[40px] bg-white/5 border border-white/10 hover:border-blue-500/20 transition-all shadow-2xl flex flex-col justify-between h-full"
                 >
                   <div className="flex-1">
-                    <div className="flex items-center justify-between mb-8">
-                      <div className="w-16 h-16 rounded-2xl bg-blue-400/10 flex items-center justify-center border border-blue-400/20 group-hover:shadow-[0_0_20px_rgba(0,163,255,0.2)] transition-all">
-                        <IconComp className="w-8 h-8 text-blue-400" />
+                    <div className="flex items-center justify-between mb-4 md:mb-8">
+                      <div className="w-10 h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-blue-400/10 flex items-center justify-center border border-blue-400/20 group-hover:shadow-[0_0_20px_rgba(0,163,255,0.2)] transition-all">
+                        <IconComp className="w-5 h-5 md:w-8 md:h-8 text-blue-400" />
                       </div>
-                      <div className="text-[10px] font-black uppercase tracking-widest text-gray-600 flex items-center gap-2">
+                      <div className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-600 flex items-center gap-2">
                          <Calendar className="w-3 h-3" /> {item.date}
                       </div>
                     </div>
                     
-                    <div className="space-y-4">
-                      <h3 className="text-xl font-black text-white group-hover:text-blue-400 transition-colors leading-tight">{item.title}</h3>
-                      <p className="text-sm text-gray-500 font-bold leading-relaxed line-clamp-3 group-hover:text-gray-400 transition-colors">{item.description}</p>
+                    <div className="space-y-2 md:space-y-4">
+                      <h3 className="text-sm md:text-xl font-black text-white group-hover:text-blue-400 transition-colors leading-tight">{item.title}</h3>
+                      <p className="text-[11px] md:text-sm text-gray-500 font-bold leading-relaxed line-clamp-3 group-hover:text-gray-400 transition-colors">{item.description}</p>
                     </div>
                   </div>
 
-                  <div className="mt-10 pt-6 border-t border-white/5 flex items-center justify-between">
-                     <span className="text-blue-500 font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2 group/link">
-                        Read Full Story <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                  <div className="mt-6 md:mt-10 pt-4 md:pt-6 border-t border-white/5 flex items-center justify-between">
+                     <span className="text-blue-500 font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] flex items-center gap-2 group/link">
+                        Details <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
                      </span>
                      <div className="flex -space-x-2">
                         {item.images.slice(0, 3).map((img, i) => (
-                          <div key={i} className="w-8 h-8 rounded-full border-2 border-[#03000A] overflow-hidden">
+                          <div key={i} className="w-6 h-6 md:w-8 md:h-8 rounded-full border-2 border-[#03000A] overflow-hidden">
                              <img src={img} className="w-full h-full object-cover" />
                           </div>
                         ))}

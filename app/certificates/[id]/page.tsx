@@ -67,10 +67,10 @@ export default function CertificateDetail() {
       {/* Back button — fixed top right */}
       <button 
         onClick={() => router.back()}
-        className="fixed top-20 right-6 z-50 inline-flex items-center gap-3 text-blue-400 hover:text-white bg-[#03000A]/80 backdrop-blur hover:bg-blue-500/20 border border-white/10 hover:border-blue-500/40 transition-all group px-5 py-3 rounded-full shadow-lg"
+        className="fixed top-20 right-6 z-50 inline-flex items-center gap-2 md:gap-3 text-blue-400 hover:text-white bg-[#03000A]/80 backdrop-blur hover:bg-blue-500/20 border border-white/10 hover:border-blue-500/40 transition-all group px-3.5 py-2 md:px-5 md:py-3 rounded-full shadow-lg"
       >
-        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-        <span className="text-xs font-black uppercase tracking-[0.2em]">Back to Showcase</span>
+        <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
+        <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em]">Back</span>
       </button>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">

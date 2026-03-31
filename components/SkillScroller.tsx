@@ -87,7 +87,7 @@ export default function SkillScroller({ skills, speed = 0.5, reverse = false, si
   return (
     <div
       className="relative select-none"
-      style={{ overflowX: "clip", overflowY: "visible" }}
+      style={{ overflowX: "hidden", overflowY: "visible" }}
       onMouseEnter={() => { isHovered.current = true; }}
       onMouseLeave={() => { isHovered.current = false; isDragging.current = false; }}
     >

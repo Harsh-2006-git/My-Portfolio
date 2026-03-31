@@ -5,7 +5,7 @@ import { Linkedin, Github, Mail, Phone } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section id="home" className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-28 py-12 md:py-24 min-h-[75vh]">
+    <section id="home" className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-28 pt-20 pb-12 md:pb-20 min-h-screen">
       <div className="relative shrink-0 w-full md:w-auto flex justify-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140px] h-[200px] md:hidden bg-[#0051FF] rounded-[48px] blur-[60px] opacity-[0.08]" />
         <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[340px] bg-[#0051FF] rounded-[48px] blur-[110px] opacity-[0.2]" />

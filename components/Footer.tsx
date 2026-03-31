@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 md:gap-12 text-center sm:text-left">
           <div className="space-y-4">
             <h4 className="text-xl md:text-3xl font-black font-cinzel text-white leading-none tracking-tight">Harsh Manmode</h4>
-            <p className="hidden md:block text-blue-500 text-[11px] md:text-xs font-black uppercase tracking-[0.4em] opacity-90 drop-shadow-[0_0_10px_rgba(0,163,255,0.6)] text-glow-blue">Building clean, efficient, and user-friendly digital products.</p>
+            <p className="text-blue-500 text-[9px] md:text-xs font-black uppercase tracking-[0.4em] opacity-90 drop-shadow-[0_0_10px_rgba(0,163,255,0.6)] text-glow-blue leading-relaxed">Building clean, efficient, and user-friendly digital products.</p>
             <p className="hidden md:block text-gray-500 text-xs md:text-sm max-w-sm leading-relaxed font-bold opacity-60">
               Dedicated to building high-performance products that drive real impact and growth.
             </p>

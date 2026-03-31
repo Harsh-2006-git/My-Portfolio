@@ -15,7 +15,11 @@ interface Props { certificates: Certificate[]; }
 /* ─── Card ─── */
 function CertCard({ cert }: { cert: Certificate }) {
   return (
-    <Link href={`/certificates/${cert.id}`} className="block group flex-shrink-0 w-[240px] sm:w-[300px]" draggable={false}>
+    <Link 
+      href={`/certificates/${cert.id}`} 
+      className="block group flex-shrink-0 w-[240px] sm:w-[320px] snap-center" 
+      draggable={false}
+    >
       <div className="rounded-b-[24px] rounded-t-none bg-white/5 border border-white/10 group-hover:border-blue-500/40 transition-all overflow-hidden shadow-xl">
         <div className="w-full bg-white" style={{ aspectRatio: "4/3", overflow: "hidden" }}>
           <img
@@ -37,14 +41,10 @@ function CertCard({ cert }: { cert: Certificate }) {
   );
 }
 
-/* ─── Unified continuous scroller ─── */
+/* ─── Stepped Scroller ─── */
 export default function CertificateScroller({ certificates }: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>(0);
   const isHovered = useRef(false);
-  const isDragging = useRef(false);
-  const dragStart = useRef({ x: 0, scroll: 0 });
-  const SPEED = 0.6;
   const GAP = 16;
 
   // Triple-duplicate for seamless loop
@@ -52,64 +52,44 @@ export default function CertificateScroller({ certificates }: Props) {
 
   useEffect(() => {
     const el = trackRef.current;
-    if (!el) return;
+    if (!el || certificates.length === 0) return;
 
-    // Start at the middle copy
-    requestAnimationFrame(() => {
-      const singleW = el.scrollWidth / 3;
-      el.scrollLeft = singleW;
-    });
+    // Start at middle copy
+    const singleW = el.scrollWidth / 3;
+    el.scrollLeft = singleW;
 
-    const tick = () => {
-      if (el && !isHovered.current && !isDragging.current) {
-        el.scrollLeft += SPEED;
-        const singleW = el.scrollWidth / 3;
-        if (el.scrollLeft >= singleW * 2) el.scrollLeft -= singleW;
-        if (el.scrollLeft <= 0) el.scrollLeft += singleW;
+    const autoScroll = setInterval(() => {
+      if (!isHovered.current) {
+        const card = el.firstElementChild as HTMLElement;
+        if (!card) return;
+        const jumpSize = card.offsetWidth + GAP;
+        
+        el.scrollBy({ left: jumpSize, behavior: "smooth" });
+
+        // Loop check after animation
+        setTimeout(() => {
+          if (!el) return;
+          const currentSingleW = el.scrollWidth / 3;
+          if (el.scrollLeft >= currentSingleW * 2) {
+            el.style.scrollBehavior = 'auto';
+            el.scrollLeft -= currentSingleW;
+            el.style.scrollBehavior = 'smooth';
+          }
+        }, 600);
       }
-      rafRef.current = requestAnimationFrame(tick);
-    };
+    }, 2500);
 
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
+    return () => clearInterval(autoScroll);
   }, [certificates]);
-
-  /* Mouse drag */
-  const onMouseDown = (e: React.MouseEvent) => {
-    isDragging.current = true;
-    dragStart.current = { x: e.clientX, scroll: trackRef.current?.scrollLeft ?? 0 };
-    e.preventDefault();
-  };
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current || !trackRef.current) return;
-    trackRef.current.scrollLeft = dragStart.current.scroll + (dragStart.current.x - e.clientX);
-  };
-  const onMouseUp = () => { isDragging.current = false; };
-
-  /* Touch drag */
-  const onTouchStart = (e: React.TouchEvent) => {
-    isHovered.current = true;
-    dragStart.current = { x: e.touches[0].clientX, scroll: trackRef.current?.scrollLeft ?? 0 };
-  };
-  const onTouchMove = (e: React.TouchEvent) => {
-    if (!trackRef.current) return;
-    const dx = dragStart.current.x - e.touches[0].clientX;
-    trackRef.current.scrollLeft = dragStart.current.scroll + dx;
-    // wrap
-    const singleW = trackRef.current.scrollWidth / 3;
-    if (trackRef.current.scrollLeft >= singleW * 2) trackRef.current.scrollLeft -= singleW;
-    if (trackRef.current.scrollLeft <= 0) trackRef.current.scrollLeft += singleW;
-  };
-  const onTouchEnd = () => { isHovered.current = false; };
 
   if (!certificates.length) return null;
 
   return (
     <div
       className="relative select-none"
-      style={{ overflowX: "clip", overflowY: "visible" }}
+      style={{ overflowX: "hidden", overflowY: "visible" }}
       onMouseEnter={() => { isHovered.current = true; }}
-      onMouseLeave={() => { isHovered.current = false; isDragging.current = false; }}
+      onMouseLeave={() => { isHovered.current = false; }}
     >
       {/* Fade edges */}
       <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-10 md:w-16 z-10 bg-gradient-to-r from-[#03000A] to-transparent" />
@@ -117,22 +97,15 @@ export default function CertificateScroller({ certificates }: Props) {
 
       <div
         ref={trackRef}
-        className="flex cursor-grab active:cursor-grabbing"
+        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar"
         style={{
           gap: GAP,
           paddingTop: 10,
           paddingBottom: 18,
-          overflowX: "scroll",
-          overflowY: "visible",
           scrollbarWidth: "none",
           msOverflowStyle: "none",
+          scrollBehavior: "smooth"
         }}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
       >
         {items.map((cert, i) => (
           <CertCard key={`${cert.id}-${i}`} cert={cert} />

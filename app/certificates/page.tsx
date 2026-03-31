@@ -54,7 +54,7 @@ export default function CertificatesPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="rounded-b-[40px] rounded-t-none bg-white/5 border border-white/10 hover:border-blue-500/20 transition-all shadow-2xl flex flex-col justify-between overflow-hidden h-full"
+                  className="rounded-b-[24px] md:rounded-b-[40px] rounded-t-none bg-white/5 border border-white/10 hover:border-blue-500/20 transition-all shadow-2xl flex flex-col justify-between overflow-hidden h-full"
                 >
                   <div>
                     {/* Fixed ratio — uniform card height, full cert visible */}
@@ -65,19 +65,19 @@ export default function CertificatesPage() {
                         className="w-full h-full object-contain"
                       />
                     </div>
-                  <div className="p-8">
-                    <div className="flex items-center gap-3 text-gray-600 text-[10px] font-black uppercase tracking-[0.3em] mb-4">
-                      <Calendar className="w-4 h-4" /> {cert.date}
+                  <div className="p-5 md:p-8">
+                    <div className="flex items-center gap-2 md:gap-3 text-gray-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] mb-2 md:mb-4">
+                      <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4" /> {cert.date}
                     </div>
-                    <h3 className="text-xl font-black text-white mb-2 group-hover:text-blue-400 transition-colors leading-tight">{cert.title}</h3>
-                    <p className="text-gray-500 font-bold text-sm mb-6">{cert.issuer}</p>
+                    <h3 className="text-base md:text-xl font-black text-white mb-1.5 md:mb-2 group-hover:text-blue-400 transition-colors leading-tight">{cert.title}</h3>
+                    <p className="text-xs md:text-sm text-gray-500 font-bold mb-4 md:mb-6">{cert.issuer}</p>
                     
-                    <div className="flex items-center justify-between mt-auto pt-4">
-                      <span className="text-blue-400 font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2 group/link">
-                        Detailed View <ArrowRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
+                    <div className="flex items-center justify-between mt-auto pt-3 md:pt-4 border-t border-white/5">
+                      <span className="text-blue-400 font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] flex items-center gap-2 group/link">
+                        Details <ArrowRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
                       </span>
                       <div className="text-gray-500 hover:text-white transition-colors">
-                        <ExternalLink className="w-4 h-4" />
+                        <ExternalLink className="w-3.5 h-3.5 md:w-4 md:h-4" />
                       </div>
                     </div>
                   </div>

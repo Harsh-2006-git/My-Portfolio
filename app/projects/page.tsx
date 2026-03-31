@@ -23,7 +23,7 @@ export default function ProjectsPage() {
       <div className="space-y-4 mb-16">
         <h2 className="text-blue-500 text-[10px] md:text-xs font-black uppercase tracking-[0.6em] mb-2 text-glow-blue">Portfolio</h2>
         <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none font-cinzel">
-          Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 drop-shadow-[0_0_15px_rgba(0,163,255,1)]">Projects</span>
+          Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 drop-shadow-[0_0_8px_rgba(0,163,255,0.6)]">Projects</span>
         </h1>
         <p className="text-gray-500 font-bold text-base md:text-lg max-w-3xl leading-relaxed">
           A curated selection of engineering projects, from complex full-stack applications to innovative digital solutions.
@@ -41,9 +41,11 @@ export default function ProjectsPage() {
           {projects.map((project: any) => (
             <ProjectCard 
               key={project.id || project.name} 
+              id={project.id}
               name={project.title || project.name} 
               techStack={project.techStack || []} 
               description={project.description} 
+              longDescription={project.longDescription}
               photos={project.photos || ["/logo3.png"]}
               gitHubLink={project.gitHubLink || "#"}
               liveLink={project.liveLink || "#"}

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import StackIcon from "tech-stack-icons";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, Send, ArrowRight } from "lucide-react";
+import { Mail, Phone, Send, ArrowRight, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 
 // Components
 import Hero from "@/components/Hero";
@@ -11,6 +11,7 @@ import ExperienceCard from "@/components/ExperienceCard";
 import ProjectCard from "@/components/ProjectCard";
 import AutoImageScroller from "@/components/AutoImageScroller";
 import CertificateScroller from "@/components/CertificateScroller";
+import AchievementScroller from "@/components/AchievementScroller";
 import SkillScroller from "@/components/SkillScroller";
 import Link from "next/link";
 import { Award, Trophy, Code, Medal, Star, TrendingUp, Calendar, Briefcase } from "lucide-react";
@@ -32,6 +33,18 @@ interface Certificate {
   date: string;
   images: string[];
   link: string;
+}
+
+interface Project {
+  id: number;
+  name: string;
+  description: string;
+  longDescription?: string;
+  photos: string[];
+  techStack: string[];
+  gitHubLink?: string;
+  liveLink?: string;
+  category?: string;
 }
 
 const iconMap: { [key: string]: any } = {
@@ -119,7 +132,7 @@ const experiences = [
 const education = [
   {
     school: "Madhav Institute of Technology and Science Gwalior",
-    degree: "Bachelor of Technology (B.Tech) in IT",
+    degree: "Bachelor of Technology in IT",
     period: "2024 - 2028",
     details: "Current GPA: 8.2",
     logo: "/mits-logo.png"
@@ -137,6 +150,31 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [isMobile, setIsMobile] = useState(false);
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) return;
+
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+      if (!res.ok) throw new Error("Failed to send");
+      setStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch (error) {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -146,11 +184,15 @@ export default function Home() {
     // Fetch dynamic data
     Promise.all([
       fetch("/api/achievements").then(res => res.json()),
-      fetch("/api/certificates").then(res => res.json())
-    ]).then(([achData, certData]) => {
+      fetch("/api/certificates").then(res => res.json()),
+      fetch("/api/projects").then(res => res.json())
+    ]).then(([achData, certData, projData]) => {
       setAchievements(achData.slice(0, 3));
       setCertificates(certData);
+      setProjects(projData.slice(0, 3));
     }).catch(err => console.error("Error fetching data:", err));
+
+    setIsMobile(window.innerWidth < 768);
 
     return () => clearTimeout(timer);
   }, []);
@@ -185,23 +227,26 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-8 md:pt-16 space-y-24 md:space-y-32 pb-24 font-plusJakartaSans min-h-screen">
+      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-8 md:pt-16 space-y-24 md:space-y-32 pb-24 font-plusJakartaSans min-h-screen overflow-x-hidden">
         <Hero />
 
 
 
         {/* Tech Stack Section */}
-        <section id="skills" className="space-y-10">
-          <div className="flex items-end justify-between border-l-4 border-blue-600 pl-6">
-            <h2 className="text-2xl md:text-3xl font-black uppercase tracking-widest text-white">Tech Stack</h2>
-            <p className="text-xs text-blue-400 uppercase tracking-widest">Drag · Swipe · Scroll</p>
+        <section id="skills" className="space-y-6 md:space-y-10">
+          <div className="flex flex-row items-center justify-between border-l-4 border-blue-600 pl-6 gap-4">
+            <h2 className="text-[20px] md:text-3xl font-black uppercase tracking-widest text-white whitespace-nowrap">Tech Stack</h2>
+            <p className="hidden md:block text-xs text-blue-400 uppercase tracking-[0.2em] whitespace-nowrap opacity-80">Drag · Swipe · Scroll</p>
           </div>
-          <div className="-mx-6">
-            <SkillScroller
-              skills={skillCategories.flatMap(c => c.skills)}
-              speed={0.5}
-              size="large"
-            />
+          <div className="space-y-4">
+            <div className="-mx-6 overflow-hidden">
+              <SkillScroller
+                skills={skillCategories.flatMap(c => c.skills)}
+                speed={isMobile ? 1.2 : 0.5}
+                size={isMobile ? "normal" : "large"}
+              />
+            </div>
+            <p className="md:hidden text-center text-[8px] font-black text-blue-500/50 uppercase tracking-[0.5em]">Drag · Swipe · Scroll</p>
           </div>
         </section>
 
@@ -220,16 +265,16 @@ export default function Home() {
                 {/* Glow on hover */}
                 <div className="absolute -inset-px rounded-[40px] bg-gradient-to-r from-blue-600/0 via-blue-500/10 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
 
-                <div className="relative rounded-[40px] bg-white/[0.03] border border-white/8 group-hover:border-blue-500/20 transition-all shadow-2xl overflow-hidden">
+                <div className="relative rounded-[24px] md:rounded-[40px] bg-white/[0.03] border border-white/8 group-hover:border-blue-500/20 transition-all shadow-2xl overflow-hidden">
                   {/* Top accent bar */}
                   <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
 
-                  <div className="p-6 md:p-8">
+                  <div className="p-5 md:p-8">
                     {/* Header row */}
-                    <div className="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-4">
+                    <div className="flex flex-col md:flex-row gap-3 md:gap-4 md:items-center justify-between mb-3 md:mb-4">
                       {/* Logo + role */}
-                      <div className="flex items-center gap-5">
-                        <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg flex-shrink-0 overflow-hidden">
+                      <div className="flex items-center gap-4 md:gap-5">
+                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-[12px] md:rounded-2xl bg-white flex items-center justify-center shadow-lg flex-shrink-0 overflow-hidden">
                           <img
                             src={exp.logo}
                             alt={exp.company}
@@ -237,29 +282,29 @@ export default function Home() {
                           />
                         </div>
                         <div>
-                          <span className="inline-block text-[9px] font-black uppercase tracking-[0.3em] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full mb-2">{exp.type}</span>
-                          <h3 className="text-xl md:text-2xl font-black text-white group-hover:text-blue-300 transition-colors leading-tight">{exp.role}</h3>
+                          <span className="inline-block text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 md:px-3 md:py-1 rounded-full mb-1">{exp.type}</span>
+                          <h3 className="text-lg md:text-2xl font-black text-white group-hover:text-blue-300 transition-colors leading-tight">{exp.role}</h3>
                         </div>
                       </div>
 
                       {/* Period badge */}
-                      <span className="text-xs font-black text-blue-400 uppercase tracking-widest bg-blue-500/5 px-5 py-2.5 rounded-full border border-blue-500/15 w-fit flex items-center gap-2">
-                        <Briefcase className="w-3.5 h-3.5" />
+                      <span className="text-[10px] md:text-xs font-black text-blue-400 uppercase tracking-widest bg-blue-500/5 px-4 py-2 md:px-5 md:py-2.5 rounded-full border border-blue-500/15 w-fit flex items-center gap-2">
+                        <Briefcase className="w-3 md:w-3.5 h-3 md:h-3.5" />
                         {exp.period}
                       </span>
                     </div>
 
                     {/* Company */}
-                    <p className="text-cyan-400/80 font-black text-sm uppercase tracking-[0.25em] mb-4 flex items-center gap-2">
-                      <span className="w-4 h-px bg-cyan-400/50" />
+                    <p className="text-cyan-400/80 font-black text-[11px] md:text-sm uppercase tracking-[0.25em] mb-3 md:mb-4 flex items-center gap-2">
+                      <span className="w-3 md:w-4 h-px bg-cyan-400/50" />
                       {exp.company}
                     </p>
 
                     {/* Points */}
-                    <ul className="space-y-2">
+                    <ul className="space-y-1.5 md:space-y-2">
                       {exp.points.map((point, i) => (
-                        <li key={i} className="flex items-start gap-4 text-gray-400 font-bold leading-relaxed">
-                          <span className="mt-2 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0" />
+                        <li key={i} className="flex items-start gap-3 md:gap-4 text-xs md:text-base text-gray-400 md:text-gray-400 font-bold leading-relaxed">
+                          <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-500 flex-shrink-0" />
                           {point}
                         </li>
                       ))}
@@ -289,36 +334,36 @@ export default function Home() {
                 {/* Glow on hover */}
                 <div className="absolute -inset-px rounded-[40px] bg-gradient-to-r from-blue-600/0 via-blue-500/10 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
 
-                <div className="relative h-full rounded-[40px] bg-white/[0.03] border border-white/8 group-hover:border-blue-500/20 transition-all shadow-2xl overflow-hidden flex flex-col">
+                <div className="relative h-full rounded-[24px] md:rounded-[40px] bg-white/[0.03] border border-white/8 group-hover:border-blue-500/20 transition-all shadow-2xl overflow-hidden flex flex-col">
                   {/* Top accent bar */}
                   <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
 
-                  <div className="p-6 flex-grow flex flex-col relative z-10">
-                    <div className="flex justify-between items-start mb-5">
-                      <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-lg flex-shrink-0 overflow-hidden">
+                  <div className="p-5 md:p-6 flex-grow flex flex-col relative z-10">
+                    <div className="flex justify-between items-start mb-4 md:mb-5">
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-white flex items-center justify-center shadow-lg flex-shrink-0 overflow-hidden">
                         <img
                           src={edu.logo}
                           alt={edu.school}
                           className="w-full h-full object-contain p-1"
                         />
                       </div>
-                      <span className="text-[10px] md:text-xs font-black text-blue-400 uppercase tracking-widest bg-blue-500/5 px-3 py-1.5 rounded-full border border-blue-500/15 flex items-center gap-1.5">
-                         <Calendar className="w-3 h-3" />
-                         {edu.period}
+                      <span className="text-[9px] md:text-xs font-black text-blue-400 uppercase tracking-widest bg-blue-500/5 px-2.5 py-1.5 md:px-3 md:py-1.5 rounded-full border border-blue-500/15 flex items-center gap-1 md:gap-1.5">
+                        <Calendar className="w-3 h-3" />
+                        {edu.period}
                       </span>
                     </div>
 
-                    <h3 className="text-lg md:text-xl font-black text-white group-hover:text-blue-300 transition-colors leading-snug mb-2">
+                    <h3 className="text-base md:text-xl font-black text-white group-hover:text-blue-300 transition-colors leading-snug mb-1 md:mb-2">
                       {edu.degree}
                     </h3>
-                    
-                    <p className="text-cyan-400/80 font-black text-xs uppercase tracking-[0.1em] mb-5 flex items-center gap-2">
-                      <span className="w-3 h-px bg-cyan-400/50 flex-shrink-0" />
+
+                    <p className="text-cyan-400/80 font-black text-[10px] md:text-xs uppercase tracking-[0.1em] mb-1.5 md:mb-5 flex items-center gap-2">
+                      <span className="w-2.5 md:w-3 h-px bg-cyan-400/50 flex-shrink-0" />
                       {edu.school}
                     </p>
 
-                    <div className="mt-auto pt-4 border-t border-white/5">
-                      <span className="inline-block text-[10px] font-black text-gray-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-md shadow-sm">
+                    <div className="mt-1 md:mt-auto pt-0 md:pt-4 border-t-0 md:border-t border-white/5">
+                      <span className="inline-block text-[9px] md:text-[10px] font-black text-gray-300 bg-white/5 border border-white/10 px-2 py-1 md:px-3 md:py-1.5 rounded-md shadow-sm">
                         {edu.details}
                       </span>
                     </div>
@@ -343,120 +388,129 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ProjectCard
-              name="Alumni Engagement"
-              category="React, Node.js"
-              description="Networking platform supporting 1,000+ users with real-time chat, admin dashboard and post-management."
-              longDescription="A full-featured platform with an admin panel, real-time messaging, and interactive community posts. Built using a modern stack for high performance and scalability."
-              photos={["/logo3.png", "/mits-logo.png"]}
-              techStack={["React", "Node.js", "Express", "MongoDB", "Socket.io"]}
-              gitHubLink="https://github.com/Harsh-2006-git"
-              liveLink="#"
-            />
-            <ProjectCard
-              name="Travel Platform"
-              category="MERN Stack"
-              description="Geo-location booking platform with verified reviews and room management."
-              longDescription="Comprehensive travel solution with interactive maps, verified user reviews, and a robust room booking system. Integrated with geo-location services for a seamless experience."
-              photos={["/logo3.png", "/mits-logo.png"]}
-              techStack={["MERN Stack", "Leaflet", "Cloudinary", "Auth0"]}
-              gitHubLink="https://github.com/Harsh-2006-git"
-              liveLink="#"
-            />
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                id={project.id}
+                name={project.name}
+                category={project.category}
+                description={project.description}
+                longDescription={project.longDescription}
+                photos={project.photos}
+                techStack={project.techStack}
+                gitHubLink={project.gitHubLink}
+                liveLink={project.liveLink}
+              />
+            ))}
           </div>
         </section>
 
-        <section id="achievements" className="space-y-12">
+        <section id="achievements" className="space-y-6 md:space-y-12">
           <div className="flex items-end justify-between border-l-4 border-blue-600 pl-6">
             <h2 className="text-2xl md:text-3xl font-black uppercase tracking-widest text-white">Achievements</h2>
-            <Link href="/achievements" className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-blue-500 hover:text-blue-400 transition-all">
-              See All Achievements
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
-            {achievements.map((item) => {
-              const IconComp = iconMap[item.icon] || Award;
-              return (
-                <Link href={`/achievements/${item.id}`} key={item.id} className="block group">
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="rounded-b-[40px] rounded-t-none bg-white/5 border border-white/10 hover:border-blue-500/20 transition-all shadow-xl flex flex-col justify-between overflow-hidden relative h-full"
-                  >
-                    <div>
-                      <div className="relative aspect-video overflow-hidden border-b border-white/5 bg-black/40">
-                        <AutoImageScroller images={item.images} />
-                      </div>
-                      <div className="p-8">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
-                             <IconComp className="w-5 h-5 text-blue-400" />
+
+          <div className="space-y-6">
+            {/* Desktop Grid */}
+            <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-10">
+              {achievements.map((item) => {
+                const IconComp = iconMap[item.icon] || Award;
+                return (
+                  <Link href={`/achievements/${item.id}`} key={item.id} className="block group">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      className="rounded-b-[24px] rounded-t-none bg-white/5 border border-white/10 hover:border-blue-500/20 transition-all shadow-xl flex flex-col justify-between overflow-hidden relative h-full"
+                    >
+                      <div>
+                        <div className="relative aspect-video overflow-hidden border-b border-white/5 bg-black/40">
+                          <AutoImageScroller images={item.images} />
+                        </div>
+                        <div className="p-5">
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+                              <IconComp className="w-4 h-4 text-blue-400" />
+                            </div>
+                            <span className="text-[8px] font-black text-gray-500 uppercase tracking-widest">{item.date}</span>
                           </div>
-                          <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest">{item.date}</span>
-                        </div>
-                        <h3 className="text-lg font-black text-white group-hover:text-blue-400 transition-colors leading-tight mb-3">{item.title}</h3>
-                        <p className="text-xs text-gray-500 font-bold leading-relaxed line-clamp-2">{item.description}</p>
-                        
-                        <div className="mt-8 text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] flex items-center gap-2">
-                           View Details <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                          <h3 className="text-sm font-black text-white group-hover:text-blue-400 transition-colors leading-snug mb-1.5 line-clamp-2">{item.title}</h3>
+                          <p className="text-[11px] text-gray-500 font-bold leading-relaxed line-clamp-2">{item.description}</p>
+
+                          <div className="mt-4 text-[9px] font-black text-blue-500 uppercase tracking-[0.2em] flex items-center gap-2">
+                            View Details <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
-                </Link>
-              )
-            })}
+                    </motion.div>
+                  </Link>
+                )
+              })}
+            </div>
+
+            {/* Mobile Scroller */}
+            <div className="md:hidden -mx-6">
+              <AchievementScroller achievements={achievements} />
+            </div>
+
+            <div className="flex justify-center mt-4">
+              <Link href="/achievements" className="group flex items-center gap-2.5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 hover:text-white transition-all bg-white/5 hover:bg-blue-600 px-5 py-2.5 rounded-xl border border-white/5 hover:border-blue-500 transition-all shadow-xl">
+                See All Achievements
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
         </section>
 
-        <section id="certificates" className="space-y-12 overflow-visible">
+        <section id="certificates" className="space-y-6 overflow-visible">
           <div className="flex items-end justify-between border-l-4 border-blue-600 pl-6">
             <h2 className="text-2xl md:text-3xl font-black uppercase tracking-widest text-white">Certificates</h2>
-            <Link href="/certificates" className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-blue-500 hover:text-blue-400 transition-all">
-              See All Certificates
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
           </div>
-          {/* Break out of px-6 so scroller reaches edge of viewport */}
-          <div className="-mx-6">
-            <CertificateScroller certificates={certificates} />
+          <div className="space-y-4">
+            <div className="-mx-6">
+              <CertificateScroller certificates={certificates} />
+            </div>
+            <div className="flex justify-center">
+              <Link href="/certificates" className="group flex items-center gap-2.5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 hover:text-white transition-all bg-white/5 hover:bg-blue-600 px-5 py-2.5 rounded-xl border border-white/5 hover:border-blue-500 transition-all shadow-xl">
+                See All Certificates
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
         </section>
 
-        <section id="contact" className="pt-24 pb-8 border-t border-white/5 space-y-16">
+        <section id="contact" className="pt-6 pb-8 border-t border-white/5 space-y-8 md:space-y-16">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mb-16">
-              <h2 className="text-sm font-black text-blue-500 uppercase tracking-[0.4em] mb-4">Get in Touch</h2>
-              <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-[1.1] mb-6 font-cinzel">Let's Build Something Extraordinary</h3>
-              <p className="text-gray-500 font-bold text-sm md:text-base leading-relaxed opacity-80">
+            <div className="max-w-3xl mb-4 md:mb-16">
+              <h2 className="text-sm font-black text-blue-500 uppercase tracking-[0.4em] mb-2 md:mb-4">Get in Touch</h2>
+              <h3 className="text-lg md:text-5xl font-black text-white tracking-tight leading-[1.1] mb-4 md:mb-6 font-cinzel">Let's Build Something Extraordinary</h3>
+              <p className="text-gray-500 font-bold text-xs md:text-base leading-relaxed opacity-80">
                 I'm always excited to hear about new challenges and creative ideas. Whether you have a specific project in mind or just want to explore a shared vision, feel free to drop me a message.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
               {/* Left Column: Info */}
-              <div className="space-y-12">
-                <div className="space-y-8">
+              <div className="space-y-8 md:space-y-12">
+                <div className="space-y-6 md:space-y-8">
                   <h4 className="text-lg font-black text-white uppercase tracking-widest border-l-4 border-blue-500 pl-6">Contact Channels</h4>
-                  <div className="space-y-10">
-                    <div className="group flex items-center gap-6">
-                      <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/20 transition-all shadow-lg">
-                        <Mail className="w-6 h-6 text-blue-400" />
+                  <div className="space-y-6 md:space-y-10">
+                    <div className="group flex items-center gap-4 md:gap-6">
+                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/20 transition-all shadow-lg">
+                        <Mail className="w-5 h-5 md:w-6 md:h-6 text-blue-400" />
                       </div>
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Email Address</p>
-                        <a href="mailto:harshmanmode79@gmail.com" className="text-sm md:text-lg font-black text-white hover:text-blue-400 transition-colors lowercase tracking-wider break-all md:break-normal">harshmanmode79@gmail.com</a>
+                        <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 mb-0.5 md:mb-1">Email Address</p>
+                        <a href="mailto:harshmanmode79@gmail.com" className="text-xs md:text-lg font-black text-white hover:text-blue-400 transition-colors lowercase tracking-wider break-all md:break-normal">harshmanmode79@gmail.com</a>
                       </div>
                     </div>
-                    <div className="group flex items-center gap-6">
-                      <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/20 transition-all shadow-lg">
-                        <Phone className="w-6 h-6 text-blue-400" />
+                    <div className="group flex items-center gap-4 md:gap-6">
+                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/20 transition-all shadow-lg">
+                        <Phone className="w-5 h-5 md:w-6 md:h-6 text-blue-400" />
                       </div>
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Phone Number</p>
-                        <p className="text-sm md:text-lg font-black text-white font-cinzel uppercase tracking-wider">+91 83057-21431</p>
+                        <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 mb-0.5 md:mb-1">Phone Number</p>
+                        <p className="text-xs md:text-lg font-black text-white font-cinzel uppercase tracking-wider">+91 83057-21431</p>
                       </div>
                     </div>
                   </div>
@@ -464,83 +518,118 @@ export default function Home() {
               </div>
 
               {/* Right Column: Form */}
-              <div className="p-5 md:p-10 rounded-[40px] bg-white/5 border border-white/10 shadow-3xl space-y-8">
-                <form className="space-y-6">
-                  <div className="space-y-2 group">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1 group-focus-within:text-blue-400 transition-colors">Your Name</label>
-                    <input type="text" placeholder="Full Name" className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 px-6 text-sm text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-bold" />
+              <div className="p-4 md:p-10 rounded-[32px] md:rounded-[40px] bg-white/5 border border-white/10 shadow-3xl space-y-4 md:space-y-8">
+                <form className="space-y-4 md:space-y-6" onSubmit={handleContactSubmit}>
+                  <div className="space-y-1.5 md:space-y-2 group">
+                    <label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1 group-focus-within:text-blue-400 transition-colors">Your Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
+                      placeholder="Full Name"
+                      className="w-full bg-white/5 border border-white/5 rounded-xl md:rounded-2xl py-3 px-5 md:py-4 md:px-6 text-xs md:text-sm text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-bold"
+                    />
                   </div>
-                  <div className="space-y-2 group">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1 group-focus-within:text-blue-400 transition-colors">Your Email</label>
-                    <input type="email" placeholder="email@address.com" className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-bold" />
+                  <div className="space-y-1.5 md:space-y-2 group">
+                    <label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1 group-focus-within:text-blue-400 transition-colors">Your Email</label>
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData(p => ({ ...p, email: e.target.value }))}
+                      placeholder="email@address.com"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl md:rounded-2xl py-3 px-5 md:py-4 md:px-6 text-xs md:text-sm text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-bold"
+                    />
                   </div>
-                  <div className="space-y-2 group">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1 group-focus-within:text-blue-400 transition-colors">Your Message</label>
-                    <textarea rows={4} placeholder="How can I help you?" className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 px-6 text-sm text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all resize-none font-bold" />
+                  <div className="space-y-1.5 md:space-y-2 group">
+                    <label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1 group-focus-within:text-blue-400 transition-colors">Your Message</label>
+                    <textarea
+                      rows={3}
+                      required
+                      value={formData.message}
+                      onChange={(e) => setFormData(p => ({ ...p, message: e.target.value }))}
+                      placeholder="How can I help you?"
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl py-3 px-5 md:py-4 md:px-6 text-xs md:text-sm text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all resize-none font-bold"
+                    />
                   </div>
-                  <button type="submit" className="w-full px-10 py-5 bg-white text-black font-black uppercase text-xs tracking-[0.2em] rounded-2xl hover:bg-blue-600 hover:text-white transition-all shadow-2xl flex items-center justify-center gap-3 group">
-                    Send Message
-                    <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className={`w-full px-8 py-3.5 md:px-10 md:py-5 font-black uppercase text-[10px] md:text-xs tracking-[0.2em] rounded-xl md:rounded-2xl transition-all shadow-2xl flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed ${status === "success" ? "bg-green-500 text-white" :
+                        status === "error" ? "bg-red-500 text-white" :
+                          "bg-white text-black hover:bg-blue-600 hover:text-white"
+                      }`}
+                  >
+                    {status === "idle" && "Send Message"}
+                    {status === "loading" && "Sending..."}
+                    {status === "success" && "Message Sent!"}
+                    {status === "error" && "Error Sending!"}
+
+                    {status === "idle" && <Send className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+                    {status === "loading" && <Loader2 className="w-3.5 h-3.5 md:w-4 md:h-4 animate-spin" />}
+                    {status === "success" && <CheckCircle className="w-3.5 h-3.5 md:w-4 md:h-4" />}
+                    {status === "error" && <AlertCircle className="w-3.5 h-3.5 md:w-4 md:h-4" />}
                   </button>
                 </form>
               </div>
             </div>
           </div>
         </section>
-      {/* Social Profiles Section */}
-      <section className="space-y-12 max-w-7xl mx-auto px-6 mb-12">
-        <h2 className="text-2xl md:text-3xl font-black uppercase tracking-widest border-l-4 border-blue-600 pl-6">Connect Digitally</h2>
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="group relative rounded-[32px] overflow-hidden border border-white/10 bg-white/5 hover:border-white/30 transition-all shadow-xl flex flex-col"
-          >
-             <div className="p-5 md:p-6 flex justify-between items-center bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/10 z-10 top-0 relative">
+        {/* Social Profiles Section */}
+        <section className="space-y-12 max-w-7xl mx-auto px-6 mb-12">
+          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-widest border-l-4 border-blue-600 pl-6">Connect Digitally</h2>
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="group relative rounded-[32px] overflow-hidden border border-white/10 bg-white/5 hover:border-white/30 transition-all shadow-xl flex flex-col"
+            >
+              <div className="p-5 md:p-6 flex justify-between items-center bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/10 z-10 top-0 relative">
                 <div>
-                   <h3 className="text-lg font-black text-white uppercase tracking-wider mb-1 group-hover:text-blue-400 transition-colors">GitHub</h3>
-                   <p className="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-widest">Explore my code</p>
+                  <h3 className="text-lg font-black text-white uppercase tracking-wider mb-1 group-hover:text-blue-400 transition-colors">GitHub</h3>
+                  <p className="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-widest">Explore my code</p>
                 </div>
-                <a 
-                   href="https://github.com/Harsh-2006-git"
-                   target="_blank"
-                   className="px-5 py-2.5 bg-white text-black font-black uppercase text-[9px] md:text-[10px] tracking-widest rounded-xl hover:bg-gray-200 transition-all shadow-md hover:scale-105"
+                <a
+                  href="https://github.com/Harsh-2006-git"
+                  target="_blank"
+                  className="px-5 py-2.5 bg-white text-black font-black uppercase text-[9px] md:text-[10px] tracking-widest rounded-xl hover:bg-gray-200 transition-all shadow-md hover:scale-105"
                 >
-                   Visit GitHub
+                  Visit GitHub
                 </a>
-             </div>
-             <div className="w-full overflow-hidden bg-black/20 p-4">
-               <img src="/github.png" className="w-full h-auto object-contain rounded-xl transition-transform duration-700 group-hover:scale-[1.02] shadow-xl border border-white/5" alt="GitHub Profile" />
-             </div>
-          </motion.div>
+              </div>
+              <div className="w-full overflow-hidden bg-black/20 p-4">
+                <img src="/github.png" className="w-full h-auto object-contain rounded-xl transition-transform duration-700 group-hover:scale-[1.02] shadow-xl border border-white/5" alt="GitHub Profile" />
+              </div>
+            </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="group relative rounded-[32px] overflow-hidden border border-white/10 bg-white/5 hover:border-blue-500/30 transition-all shadow-xl flex flex-col"
-          >
-             <div className="p-5 md:p-6 flex justify-between items-center bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/10 z-10 top-0 relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="group relative rounded-[32px] overflow-hidden border border-white/10 bg-white/5 hover:border-blue-500/30 transition-all shadow-xl flex flex-col"
+            >
+              <div className="p-5 md:p-6 flex justify-between items-center bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/10 z-10 top-0 relative">
                 <div>
-                   <h3 className="text-lg font-black text-white uppercase tracking-wider mb-1 group-hover:text-blue-400 transition-colors">LinkedIn</h3>
-                   <p className="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-widest">Connect with me</p>
+                  <h3 className="text-lg font-black text-white uppercase tracking-wider mb-1 group-hover:text-blue-400 transition-colors">LinkedIn</h3>
+                  <p className="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-widest">Connect with me</p>
                 </div>
-                <a 
-                   href="https://linkedin.com/in/harsh-manmode-2a0b91325"
-                   target="_blank"
-                   className="px-5 py-2.5 bg-[#0a66c2] text-white font-black uppercase text-[9px] md:text-[10px] tracking-widest rounded-xl hover:bg-[#004182] transition-all shadow-md hover:scale-105"
+                <a
+                  href="https://linkedin.com/in/harsh-manmode-2a0b91325"
+                  target="_blank"
+                  className="px-5 py-2.5 bg-[#0a66c2] text-white font-black uppercase text-[9px] md:text-[10px] tracking-widest rounded-xl hover:bg-[#004182] transition-all shadow-md hover:scale-105"
                 >
-                   Visit LinkedIn
+                  Visit LinkedIn
                 </a>
-             </div>
-             <div className="w-full overflow-hidden bg-white/5 p-4">
-               <img src="/linkedin.png" className="w-full h-auto object-contain rounded-xl transition-transform duration-700 group-hover:scale-[1.02] shadow-xl border border-white/5" alt="LinkedIn Profile" />
-             </div>
-          </motion.div>
-        </div>
-      </section>
+              </div>
+              <div className="w-full overflow-hidden bg-white/5 p-4">
+                <img src="/linkedin.png" className="w-full h-auto object-contain rounded-xl transition-transform duration-700 group-hover:scale-[1.02] shadow-xl border border-white/5" alt="LinkedIn Profile" />
+              </div>
+            </motion.div>
+          </div>
+        </section>
       </main>
     </>
   );
