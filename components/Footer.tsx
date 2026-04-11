@@ -17,18 +17,18 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3 md:gap-5 flex-wrap justify-center sm:justify-end">
-            <a href="https://github.com/Harsh-2006-git" target="_blank" className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 flex items-center justify-center bg-white/20 transition-all group shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:bg-white hover:shadow-[0_0_35px_white] hover:scale-110">
-              <Github className="w-4 h-4 md:w-5 md:h-5 text-white group-hover:text-black transition-colors" />
+          <div className="flex items-center gap-4 md:gap-6 flex-wrap justify-center sm:justify-end">
+            <a href="https://github.com/Harsh-2006-git" target="_blank" className="w-10 h-10 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 transition-all group hover:bg-blue-600/10 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(0,163,255,0.15)] hover:-translate-y-1">
+              <Github className="w-4 h-4 md:w-6 md:h-6 text-gray-400 group-hover:text-blue-400 transition-colors" />
             </a>
-            <a href="https://linkedin.com/in/harsh-manmode-2a0b91325" target="_blank" className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-blue-500/40 flex items-center justify-center bg-[#0077b5]/20 transition-all group shadow-[0_0_20px_rgba(0,119,181,0.5)] hover:bg-[#0077b5] hover:shadow-[0_0_40px_#0077b5] hover:scale-110">
-              <Linkedin className="w-4 h-4 md:w-5 md:h-5 text-[#0077b5] group-hover:text-white transition-colors" />
+            <a href="https://linkedin.com/in/harsh-manmode-2a0b91325" target="_blank" className="w-10 h-10 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 transition-all group hover:bg-blue-600/10 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(0,163,255,0.15)] hover:-translate-y-1">
+              <Linkedin className="w-4 h-4 md:w-6 md:h-6 text-gray-400 group-hover:text-blue-400 transition-colors" />
             </a>
-            <a href="mailto:harshmanmode79@gmail.com" className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-red-500/40 flex items-center justify-center bg-[#ea4335]/20 transition-all group shadow-[0_0_20px_rgba(234,67,53,0.5)] hover:bg-[#ea4335] hover:shadow-[0_0_40px_#ea4335] hover:scale-110">
-              <Mail className="w-4 h-4 md:w-5 md:h-5 text-[#ea4335] group-hover:text-white transition-colors" />
+            <a href="mailto:harshmanmode79@gmail.com" className="w-10 h-10 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 transition-all group hover:bg-blue-600/10 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(0,163,255,0.15)] hover:-translate-y-1">
+              <Mail className="w-4 h-4 md:w-6 md:h-6 text-gray-400 group-hover:text-blue-400 transition-colors" />
             </a>
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-green-500/40 flex items-center justify-center bg-[#34a853]/20 transition-all group shadow-[0_0_20px_rgba(52,168,83,0.5)] hover:bg-[#34a853] hover:shadow-[0_0_40px_#34a853] hover:scale-110">
-              <Phone className="w-4 h-4 md:w-5 md:h-5 text-[#34a853] group-hover:text-white transition-colors" />
+            <div className="w-10 h-10 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 transition-all group hover:bg-blue-600/10 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(0,163,255,0.15)] hover:-translate-y-1">
+              <Phone className="w-4 h-4 md:w-6 md:h-6 text-gray-400 group-hover:text-blue-400 transition-colors" />
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@ export default function Footer() {
         <div className="flex justify-center items-center text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 gap-2">
           <span>Made with</span>
           <Heart className="w-3 h-3 text-red-500 animate-pulse" />
-          <span>by Harsh Manmmode</span>
+          <span>by Harsh Manmode</span>
         </div>
       </div>
     </footer>

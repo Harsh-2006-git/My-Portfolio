@@ -35,7 +35,7 @@ function AchievementCard({ item }: { item: Achievement }) {
       <div className="rounded-b-[24px] rounded-t-none bg-white/5 border border-white/10 group-hover:border-blue-500/20 transition-all shadow-xl flex flex-col justify-between overflow-hidden relative h-full">
         <div>
           <div className="relative aspect-video overflow-hidden border-b border-white/5 bg-black/40">
-            <AutoImageScroller images={item.images} />
+            <AutoImageScroller images={item.images} isStatic={true} />
           </div>
           <div className="p-5">
             <div className="flex items-center justify-between mb-3">

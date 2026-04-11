@@ -187,7 +187,7 @@ export default function Home() {
       fetch("/api/certificates").then(res => res.json()),
       fetch("/api/projects").then(res => res.json())
     ]).then(([achData, certData, projData]) => {
-      setAchievements(achData.slice(0, 3));
+      setAchievements(achData);
       setCertificates(certData);
       setProjects(projData.slice(0, 3));
     }).catch(err => console.error("Error fetching data:", err));
@@ -430,7 +430,7 @@ export default function Home() {
           <div className="space-y-6">
             {/* Desktop Grid */}
             <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-10">
-              {achievements.map((item) => {
+              {achievements.slice(0, 3).map((item) => {
                 const IconComp = iconMap[item.icon] || Award;
                 return (
                   <Link href={`/achievements/${item.id}`} key={item.id} className="block group">
