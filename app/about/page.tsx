@@ -98,11 +98,11 @@ export default function AboutPage() {
     <main className="relative z-10 max-w-7xl mx-auto px-6 pt-32 md:pt-40 pb-24 font-plusJakartaSans min-h-screen space-y-12 md:space-y-24">
       {/* Intro Section */}
       <section className="space-y-6 md:space-y-8">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-          {/* Left: heading + description */}
+        <div className="max-w-4xl">
+          {/* Intro Section */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="space-y-6 md:space-y-10"
           >
@@ -112,35 +112,13 @@ export default function AboutPage() {
                 About <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 drop-shadow-[0_0_12px_rgba(0,163,255,0.4)]">Harsh</span>
               </h1>
             </div>
-            <div className="space-y-4 md:space-y-6 text-gray-400 text-sm md:text-lg leading-relaxed font-bold text-justify">
+            <div className="space-y-4 md:space-y-6 text-gray-400 text-sm md:text-lg leading-relaxed font-bold text-left">
               <p>
                 I am a second-year B.Tech Information Technology student at MITS Gwalior, driven by a passion for software engineering and problem-solving.
               </p>
               <p>
                 With a strong foundation in Data Structures, Algorithms, and MERN stack development, I specialize in building user-focused, scalable applications. My experience as a Full Stack Intern has refined my ability to collaborate in engineering teams and deliver high-performance solutions.
               </p>
-            </div>
-          </motion.div>
-
-          {/* Right: photo */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="relative flex justify-center md:justify-end"
-          >
-            {/* Always-on strong glow */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-56 md:w-72 h-full rounded-[24px] md:rounded-[40px] bg-blue-500/25 blur-[60px]" />
-            </div>
-            <div className="relative w-full max-w-[320px] md:max-w-[420px] overflow-hidden rounded-[24px] md:rounded-[40px]">
-              <img
-                src="/harsh.png"
-                alt="Harsh Manmode"
-                className="w-full h-auto block"
-              />
-              {/* Subtle bottom fade */}
-              <div className="absolute bottom-0 left-0 right-0 h-20 md:h-28 bg-gradient-to-t from-[#03000A]/70 to-transparent pointer-events-none" />
             </div>
           </motion.div>
         </div>

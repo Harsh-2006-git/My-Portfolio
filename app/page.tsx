@@ -197,6 +197,23 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (loading) {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100vh";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+      document.body.style.height = "auto";
+      document.documentElement.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+      document.body.style.height = "auto";
+      document.documentElement.style.overflow = "unset";
+    };
+  }, [loading]);
+
   return (
     <>
       <AnimatePresence>
@@ -425,7 +442,7 @@ export default function Home() {
                     >
                       <div>
                         <div className="relative aspect-video overflow-hidden border-b border-white/5 bg-black/40">
-                          <AutoImageScroller images={item.images} />
+                          <AutoImageScroller images={item.images} isStatic={true} />
                         </div>
                         <div className="p-5">
                           <div className="flex items-center justify-between mb-3">

@@ -5,13 +5,14 @@ import { motion } from "framer-motion";
 
 interface AutoImageScrollerProps {
   images: string[];
+  isStatic?: boolean;
 }
 
-export default function AutoImageScroller({ images }: AutoImageScrollerProps) {
+export default function AutoImageScroller({ images, isStatic = false }: AutoImageScrollerProps) {
   if (!images || images.length === 0) return null;
   
-  // If only one image, just show it
-  if (images.length === 1) {
+  // If static or only one image, just show the first one
+  if (isStatic || images.length === 1) {
     return (
       <div className="w-full h-full relative group bg-black/40">
         <img src={images[0]} className="w-full h-full object-contain" alt="Detail" />

@@ -30,6 +30,33 @@ export async function GET() {
       link: "#"
     },
     {
+      id: 13,
+      title: "Devscript Hackathon",
+      issuer: "GDG MITS Gwalior Community",
+      description: "Secured the **2nd Runner Up** position in the **Devscript Hackathon**, organized by the **GDG MITS Gwalior Community**. This achievement reflects successful collaboration and innovative problem-solving in a competitive hackathon environment.",
+      date: "April 2026",
+      images: ["/certificates/1775073917717.jpg"],
+      link: "#"
+    },
+    {
+      id: 14,
+      title: "Technocrats Innovation Challenge Hackathon 2k26",
+      issuer: "TIT Bhopal College",
+      description: "Secured the **1st Runner Up** position in the **Technocrats Innovation Challenge 2k26**, organized by **TIT Bhopal**. This event brought together innovators from across India (300+ teams) to build working solutions in a 36-hour continuous hackathon.",
+      date: "March 2026",
+      images: ["/certificates/Technocrats-certificate.jpg"],
+      link: "#"
+    },
+    {
+      id: 11,
+      title: "Mediverse Hackathon",
+      issuer: "Medicaps University Indore",
+      description: "9th rank in the **Mediverse hackathon**, developing technology-driven solutions to improve healthcare accessibility and patient outcomes.",
+      date: "November 2025",
+      images: ["/certificates/mediverse.jpg"],
+      link: "#"
+    },
+    {
       id: 9,
       title: "Codeverse Certification",
       issuer: "Codeverse",
@@ -101,15 +128,7 @@ export async function GET() {
       images: ["/certificates/gdg.jpg"],
       link: "#"
     },
-    {
-      id: 11,
-      title: "Mediverse Hackathon",
-      issuer: "Medicaps University Indore",
-      description: "9th rank in the **Mediverse hackathon**, developing technology-driven solutions to improve healthcare accessibility and patient outcomes.",
-      date: "November 2025",
-      images: ["/certificates/mediverse.jpg"],
-      link: "#"
-    }
+
   ];
 
   return NextResponse.json(certificates);

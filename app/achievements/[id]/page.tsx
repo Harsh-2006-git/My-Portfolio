@@ -84,7 +84,7 @@ export default function AchievementDetail() {
             <img 
               src={achievement.images[activeImage]} 
               alt={achievement.title}
-              className="w-full h-full object-cover transition-all duration-700"
+              className="w-full h-full object-contain transition-all duration-700"
             />
             
             {achievement.images.length > 1 && (

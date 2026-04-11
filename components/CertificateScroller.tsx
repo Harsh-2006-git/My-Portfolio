@@ -20,8 +20,8 @@ function CertCard({ cert }: { cert: Certificate }) {
       className="block group flex-shrink-0 w-[240px] sm:w-[320px] snap-center" 
       draggable={false}
     >
-      <div className="rounded-b-[24px] rounded-t-none bg-white/5 border border-white/10 group-hover:border-blue-500/40 transition-all overflow-hidden shadow-xl">
-        <div className="w-full bg-white" style={{ aspectRatio: "4/3", overflow: "hidden" }}>
+      <div className="h-full rounded-b-[24px] rounded-t-none bg-white/5 border border-white/10 group-hover:border-blue-500/40 transition-all overflow-hidden shadow-xl flex flex-col">
+        <div className="w-full bg-white shrink-0" style={{ aspectRatio: "4/3", overflow: "hidden" }}>
           <img
             src={cert.images[0]}
             alt={cert.title}
@@ -29,10 +29,12 @@ function CertCard({ cert }: { cert: Certificate }) {
             draggable={false}
           />
         </div>
-        <div className="p-5 space-y-2">
-          <p className="text-blue-400 font-black uppercase text-[10px] tracking-[0.3em] truncate">{cert.issuer}</p>
-          <h3 className="text-sm font-black text-white group-hover:text-blue-400 transition-colors leading-snug line-clamp-2">{cert.title}</h3>
-          <div className="pt-1.5 text-[10px] font-black text-blue-500 uppercase tracking-widest flex items-center gap-1">
+        <div className="p-5 space-y-2 flex-grow flex flex-col justify-between">
+          <div className="space-y-1">
+            <p className="text-blue-400 font-black uppercase text-[10px] tracking-[0.3em] truncate">{cert.issuer}</p>
+            <h3 className="text-sm font-black text-white group-hover:text-blue-400 transition-colors leading-snug line-clamp-2">{cert.title}</h3>
+          </div>
+          <div className="pt-2 text-[10px] font-black text-blue-500 uppercase tracking-widest flex items-center gap-1">
             View Detail <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
           </div>
         </div>
