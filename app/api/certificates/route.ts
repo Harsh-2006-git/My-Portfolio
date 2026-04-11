@@ -35,7 +35,7 @@ export async function GET() {
       issuer: "GDG MITS Gwalior Community",
       description: "Secured the **2nd Runner Up** position in the **Devscript Hackathon**, organized by the **GDG MITS Gwalior Community**. This achievement reflects successful collaboration and innovative problem-solving in a competitive hackathon environment.",
       date: "April 2026",
-      images: ["/certificates/1775073917717.jpg"],
+      images: ["/certificates/Devscript-certificate.jpg"],
       link: "#"
     },
     {

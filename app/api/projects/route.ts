@@ -4,9 +4,9 @@ export async function GET() {
   const projects = [
     {
       id: 1,
-      name: "Alumni Engagements Networking Platform",
-      description: "Networking platform supporting 1,000+ users with real-time chat and post-management.",
-      longDescription: "Built an alumni networking platform supporting 1,000+ users with real-time chat and mentorship matching features.\n\n• Developed a full-featured admin dashboard for complete management and deployed on the college’s official domain.\n• Implemented JWT-based Google OAuth 2.0 authentication to enable secure and seamless user sign-in.\n• Architected a Socket.IO–based real-time messaging system for instant, scalable communication.\n• Built an Alumni Association Platform with event management, fundraising, job postings, blogging, mentorship, networking, and profile management, increasing user engagement by 65%.",
+      name: "MITS Alumni Portal - Digital Hub",
+      description: "The official alumni networking platform for MITS Gwalior, facilitating collaboration between 15,000+ alumni and students.",
+      longDescription: "I designed and developed the official Alumni Portal for Madhav Institute of Technology and Science, Gwalior. The platform was officially adopted by the institute and launched on MITS Day 2026, where I was honored with the **Meritocracy Award** for this contribution.\n\n✨ Key Features:\n• Mentorship & Job referral systems.\n• Socket.IO–based real-time messaging.\n• JWT-based Google OAuth 2.0 security.\n• Event management and fundraising initiatives.\n• Comprehensive Admin Dashboard for centralized institute control.",
       photos: [
         "/projects/1.1.jpg",
         "/projects/1.2.jpg",
@@ -21,9 +21,9 @@ export async function GET() {
         "/projects/1.11.jpg",
         "/projects/1.12.jpg"
       ],
-      techStack: ["React.js", "Node.js", "Express.js", "MongoDB", "Socket.io", "GeminiAPI", "Tailwind CSS"],
+      techStack: ["React.js", "Node.js", "Express.js", "MongoDB", "Socket.io", "Google OAuth", "Tailwind CSS"],
       gitHubLink: "https://github.com/Harsh-2006-git/alumni-platform",
-      liveLink: "#",
+      liveLink: "https://lnkd.in/dVH8FdFq",
       category: "Full Stack Web"
     },
     {
