@@ -32,10 +32,18 @@ export default function AchievementsPage() {
     fetch("/api/achievements")
       .then((res) => res.json())
       .then((data) => {
-        setAchievements(data);
+        if (Array.isArray(data)) {
+          setAchievements(data);
+        } else {
+          console.error("Invalid achievements data format:", data);
+          setAchievements([]);
+        }
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -58,7 +66,7 @@ export default function AchievementsPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {achievements.map((item) => {
+          {Array.isArray(achievements) && achievements.map((item) => {
             const IconComp = iconMap[item.icon] || Award;
             return (
               <Link href={`/achievements/${item._id}`} key={item._id} className="block group">

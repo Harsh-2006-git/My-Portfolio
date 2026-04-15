@@ -24,5 +24,4 @@ const ProjectSchema: Schema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-delete mongoose.models.Project;
-export default mongoose.model<IProject>("Project", ProjectSchema);
+export default mongoose.models.Project || mongoose.model<IProject>("Project", ProjectSchema);

@@ -22,5 +22,4 @@ const CertificateSchema: Schema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-delete mongoose.models.Certificate;
-export default mongoose.model<ICertificate>("Certificate", CertificateSchema);
+export default mongoose.models.Certificate || mongoose.model<ICertificate>("Certificate", CertificateSchema);

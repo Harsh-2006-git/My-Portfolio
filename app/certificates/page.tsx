@@ -23,10 +23,18 @@ export default function CertificatesPage() {
     fetch("/api/certificates")
       .then((res) => res.json())
       .then((data) => {
-        setCertificates(data);
+        if (Array.isArray(data)) {
+          setCertificates(data);
+        } else {
+          console.error("Invalid certificates data format:", data);
+          setCertificates([]);
+        }
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -49,7 +57,7 @@ export default function CertificatesPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certificates.map((cert) => (
+          {Array.isArray(certificates) && certificates.map((cert) => (
             <Link href={`/certificates/${cert._id}`} key={cert._id} className="block group">
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
