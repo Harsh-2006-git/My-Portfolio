@@ -6,7 +6,7 @@ import { ArrowRight, Trophy, Medal, Code, TrendingUp, Star, Award } from "lucide
 import AutoImageScroller from "./AutoImageScroller";
 
 interface Achievement {
-  id: number;
+  _id: string;
   title: string;
   description: string;
   date: string;
@@ -28,7 +28,7 @@ function AchievementCard({ item }: { item: Achievement }) {
   const IconComp = iconMap[item.icon] || Award;
   return (
     <Link 
-      href={`/achievements/${item.id}`} 
+      href={`/achievements/${item._id}`} 
       className="block group flex-shrink-0 w-[240px] sm:w-[300px] snap-center"
       draggable={false}
     >
@@ -45,7 +45,13 @@ function AchievementCard({ item }: { item: Achievement }) {
               <span className="text-[8px] font-black text-gray-500 uppercase tracking-widest">{item.date}</span>
             </div>
             <h3 className="text-sm font-black text-white group-hover:text-blue-400 transition-colors leading-snug mb-1.5 line-clamp-2">{item.title}</h3>
-            <p className="text-[11px] text-gray-500 font-bold leading-relaxed line-clamp-2">{item.description}</p>
+            <div 
+              className="text-[11px] text-gray-500 font-bold leading-relaxed line-clamp-2 ach-scroll-description"
+              dangerouslySetInnerHTML={{ __html: item.description }}
+            />
+            <style jsx global>{`
+              .ach-scroll-description * { margin: 0; padding: 0; }
+            `}</style>
             
             <div className="mt-4 text-[9px] font-black text-blue-500 uppercase tracking-[0.2em] flex items-center gap-2">
               View Details <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
@@ -120,7 +126,7 @@ export default function AchievementScroller({ achievements }: Props) {
         }}
       >
         {items.map((item, i) => (
-          <AchievementCard key={`${item.id}-${i}`} item={item} />
+          <AchievementCard key={`${item._id}-${i}`} item={item} />
         ))}
       </div>
     </div>

@@ -8,9 +8,10 @@ interface CertificateProps {
   org: string;
   date: string;
   image: string;
+  description?: string;
 }
 
-export default function CertificateCard({ title, org, date, image }: CertificateProps) {
+export default function CertificateCard({ title, org, date, image, description }: CertificateProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -29,6 +30,16 @@ export default function CertificateCard({ title, org, date, image }: Certificate
       <div className="p-6">
         <h3 className="text-lg font-bold text-white mb-1 leading-tight group-hover:text-cyan-400 transition-colors">{title}</h3>
         <p className="text-cyan-500 text-sm font-medium mb-3">{org}</p>
+        {description && (
+          <div 
+            className="text-gray-400 text-xs leading-relaxed mb-4 cert-description"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        )}
+        <style jsx global>{`
+          .cert-description p { margin-bottom: 0.3rem; }
+          .cert-description b, .cert-description strong { font-weight: 700; color: #fff; }
+        `}</style>
         <div className="flex items-center justify-between mt-4">
           <span className="text-gray-500 text-xs font-medium uppercase tracking-wider">{date}</span>
           <button className="flex items-center gap-2 text-xs font-semibold text-white/70 hover:text-white transition-colors py-2 px-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10">

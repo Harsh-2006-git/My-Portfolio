@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 interface Certificate {
-  id: number;
+  _id: string;
   title: string;
   issuer: string;
   images: string[];
@@ -16,14 +16,14 @@ interface Props { certificates: Certificate[]; }
 function CertCard({ cert }: { cert: Certificate }) {
   return (
     <Link 
-      href={`/certificates/${cert.id}`} 
+      href={`/certificates/${cert._id}`} 
       className="block group flex-shrink-0 w-[240px] sm:w-[320px] snap-center" 
       draggable={false}
     >
       <div className="h-full rounded-b-[24px] rounded-t-none bg-white/5 border border-white/10 group-hover:border-blue-500/40 transition-all overflow-hidden shadow-xl flex flex-col">
         <div className="w-full bg-white shrink-0" style={{ aspectRatio: "4/3", overflow: "hidden" }}>
           <img
-            src={cert.images[0]}
+            src={cert.images?.[0] || ""}
             alt={cert.title}
             className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-500"
             draggable={false}
@@ -110,7 +110,7 @@ export default function CertificateScroller({ certificates }: Props) {
         }}
       >
         {items.map((cert, i) => (
-          <CertCard key={`${cert.id}-${i}`} cert={cert} />
+          <CertCard key={`${cert._id}-${i}`} cert={cert} />
         ))}
       </div>
     </div>

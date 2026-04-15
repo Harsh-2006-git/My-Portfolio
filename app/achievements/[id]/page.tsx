@@ -7,7 +7,7 @@ import { Calendar, Trophy, Medal, Code, TrendingUp, Star, ArrowLeft, ChevronLeft
 import Link from "next/link";
 
 interface Achievement {
-  id: number;
+  _id: string;
   title: string;
   description: string;
   date: string;
@@ -34,7 +34,7 @@ export default function AchievementDetail() {
     fetch("/api/achievements")
       .then((res) => res.json())
       .then((data) => {
-        const found = data.find((a: any) => a.id.toString() === id);
+        const found = data.find((a: any) => a._id.toString() === id);
         setAchievement(found || null);
         setLoading(false);
       })
@@ -168,31 +168,16 @@ export default function AchievementDetail() {
              transition={{ delay: 0.3 }}
              className="space-y-6"
           >
-            <h3 className="text-sm font-black text-white uppercase tracking-widest border-l-4 border-blue-500 pl-4">Description</h3>
-            <div className="text-gray-400 font-bold leading-relaxed text-lg whitespace-pre-wrap space-y-4">
-              {achievement.description.split('\n\n').map((paragraph, i) => (
-                <p key={i}>
-                  {paragraph.split('\n').map((line, j) => (
-                    <React.Fragment key={j}>
-                      {line.startsWith('### ') ? (
-                        <span className="block text-xl font-black text-white mt-4 mb-2">{line.replace('### ', '')}</span>
-                      ) : (
-                        <span>
-                          {line.split(/(\*\*.*?\*\*)/g).map((part, k) => (
-                            part.startsWith('**') && part.endsWith('**') ? (
-                              <strong key={k} className="text-blue-400 font-black">{part.slice(2, -2)}</strong>
-                            ) : (
-                              part
-                            )
-                          ))}
-                        </span>
-                      )}
-                      {j < paragraph.split('\n').length - 1 && <br />}
-                    </React.Fragment>
-                  ))}
-                </p>
-              ))}
-            </div>
+            <div 
+              className="text-gray-400 font-bold leading-relaxed text-lg ach-detail-description"
+              dangerouslySetInnerHTML={{ __html: achievement.description }}
+            />
+            <style jsx global>{`
+              .ach-detail-description ul { list-style-type: disc; padding-left: 1.5rem; margin-top: 1rem; margin-bottom: 1rem; }
+              .ach-detail-description li { margin-bottom: 0.5rem; }
+              .ach-detail-description p { margin-bottom: 1rem; }
+              .ach-detail-description b, .ach-detail-description strong { font-weight: 900; color: #fff; }
+            `}</style>
           </motion.div>
         </div>
       </div>

@@ -8,9 +8,7 @@ import {
   Cinzel,
 } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
+import ConditionalLayout from "@/components/ConditionalLayout";
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "700", "900"],
@@ -46,6 +44,10 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Harsh Manmode | Portfolio",
   description: "A professional portfolio showcasing digital solutions and software engineering excellence.",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
@@ -62,9 +64,7 @@ export default function RootLayout({
         <div className="fixed top-[-5%] left-[-5%] w-[450px] h-[450px] bg-[#0051FF] rounded-full blur-[180px] opacity-[0.12] pointer-events-none z-0"></div>
         <div className="fixed bottom-[-5%] right-[-5%] w-[380px] h-[380px] bg-[#320F85] rounded-full blur-[160px] opacity-[0.1] pointer-events-none z-0"></div>
 
-        <Header />
-        {children}
-        <Footer />
+        <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
   );

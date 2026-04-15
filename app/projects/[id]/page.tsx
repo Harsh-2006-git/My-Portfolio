@@ -7,14 +7,14 @@ import { ArrowLeft, ChevronLeft, ChevronRight, Github, Globe, Layers, Calendar, 
 import Link from "next/link";
 
 interface Project {
-  id: number;
-  name: string;
+  _id: string;
+  title: string;
   description: string;
   longDescription?: string;
-  photos: string[];
+  images: string[];
   techStack: string[];
-  gitHubLink?: string;
-  liveLink?: string;
+  github?: string;
+  link?: string;
   category?: string;
 }
 
@@ -29,7 +29,7 @@ export default function ProjectDetail() {
     fetch("/api/projects")
       .then((res) => res.json())
       .then((data) => {
-        const found = data.find((p: any) => p.id.toString() === id);
+        const found = data.find((p: any) => p._id.toString() === id);
         setProject(found || null);
         setLoading(false);
       })
@@ -54,6 +54,8 @@ export default function ProjectDetail() {
       </div>
     );
   }
+
+  const photos = project.images || [];
 
   return (
     <main className="relative z-10 max-w-7xl mx-auto px-6 pt-24 md:pt-32 pb-24 font-plusJakartaSans min-h-screen">
@@ -81,41 +83,39 @@ export default function ProjectDetail() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 1.05 }}
                 transition={{ duration: 0.5 }}
-                src={project.photos[activeImage]} 
-                alt={project.name}
+                src={photos[activeImage]} 
+                alt={project.title}
                 className="w-full h-full object-contain"
               />
             </AnimatePresence>
-            
-            {project.photos.length > 1 && (
-              <div className="absolute inset-0 flex items-center justify-between px-6 opacity-0 group-hover:opacity-100 transition-opacity">
+
+            {photos.length > 1 && (
+              <>
                 <button 
-                  onClick={() => setActiveImage((prev) => (prev === 0 ? project.photos.length - 1 : prev - 1))}
-                  className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 hover:bg-white/20 transition-all"
+                  onClick={() => setActiveImage((prev) => (prev - 1 + photos.length) % photos.length)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-600"
                 >
-                  <ChevronLeft className="w-6 h-6 text-white" />
+                  <ChevronLeft size={20} />
                 </button>
                 <button 
-                  onClick={() => setActiveImage((prev) => (prev === project.photos.length - 1 ? 0 : prev + 1))}
-                  className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 hover:bg-white/20 transition-all"
+                  onClick={() => setActiveImage((prev) => (prev + 1) % photos.length)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-600"
                 >
-                  <ChevronRight className="w-6 h-6 text-white" />
+                  <ChevronRight size={20} />
                 </button>
-              </div>
+              </>
             )}
           </motion.div>
 
-          {project.photos.length > 1 && (
-            <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-              {project.photos.map((img, idx) => (
+          {photos.length > 1 && (
+            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+              {photos.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveImage(idx)}
-                  className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
-                    activeImage === idx ? 'border-blue-500 scale-105 shadow-[0_0_10px_rgba(0,163,255,0.4)]' : 'border-white/5 opacity-50 hover:opacity-100'
-                  }`}
+                  className={`relative flex-shrink-0 w-24 aspect-video rounded-2xl overflow-hidden border transition-all ${activeImage === idx ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-white/10 opacity-50 hover:opacity-100'}`}
                 >
-                  <img src={img} className="w-full h-full object-cover" alt={`${project.name} thumbnail ${idx + 1}`} />
+                  <img src={img} className="w-full h-full object-cover" alt={`Thumb ${idx}`} />
                 </button>
               ))}
             </div>
@@ -141,7 +141,7 @@ export default function ProjectDetail() {
                transition={{ delay: 0.1 }}
                className="text-3xl md:text-5xl font-black text-white leading-[1.1] tracking-tighter font-cinzel"
              >
-               {project.name}
+               {project.title}
              </motion.h1>
           </div>
 
@@ -151,14 +151,14 @@ export default function ProjectDetail() {
              transition={{ delay: 0.2 }}
              className="flex flex-wrap gap-4 py-4 border-y border-white/5"
           >
-            {project.liveLink && project.liveLink !== "#" && (
-              <a href={project.liveLink} target="_blank" className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-black uppercase text-[9px] tracking-widest hover:bg-blue-500 transition-all shadow-xl group">
+            {project.link && project.link !== "#" && (
+              <a href={project.link} target="_blank" className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-black uppercase text-[9px] tracking-widest hover:bg-blue-500 transition-all shadow-xl group">
                 <Globe className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform" />
                 Live Preview
               </a>
             )}
-            {project.gitHubLink && project.gitHubLink !== "#" && (
-              <a href={project.gitHubLink} target="_blank" className="flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-black uppercase text-[9px] tracking-widest hover:bg-white hover:text-black transition-all group">
+            {project.github && project.github !== "#" && (
+              <a href={project.github} target="_blank" className="flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-black uppercase text-[9px] tracking-widest hover:bg-white hover:text-black transition-all group">
                 <Github className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform" />
                 Code Base
               </a>
@@ -172,9 +172,15 @@ export default function ProjectDetail() {
              className="space-y-4"
           >
             <h3 className="text-xs font-black text-white uppercase tracking-widest border-l-4 border-blue-500 pl-4">Project Overview</h3>
-            <div className="text-gray-400 font-bold leading-relaxed text-base whitespace-pre-wrap">
-              {project.longDescription || project.description}
-            </div>
+            <div 
+              className="text-gray-400 font-bold leading-relaxed text-base project-overview-html"
+              dangerouslySetInnerHTML={{ __html: project.longDescription || project.description }}
+            />
+            <style jsx global>{`
+              .project-overview-html p { margin-bottom: 1rem; }
+              .project-overview-html b, .project-overview-html strong { font-weight: 900; color: #fff; }
+              .project-overview-html ul, .project-overview-html ol { margin-left: 1.5rem; margin-bottom: 1rem; }
+            `}</style>
           </motion.div>
 
           <motion.div 

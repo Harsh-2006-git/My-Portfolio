@@ -40,15 +40,15 @@ export default function ProjectsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project: any) => (
             <ProjectCard 
-              key={project.id || project.name} 
-              id={project.id}
-              name={project.title || project.name} 
+              key={project._id} 
+              id={project._id}
+              name={project.title} 
               techStack={project.techStack || []} 
               description={project.description} 
-              longDescription={project.longDescription}
-              photos={project.photos || ["/logo3.png"]}
-              gitHubLink={project.gitHubLink || "#"}
-              liveLink={project.liveLink || "#"}
+              longDescription={project.description}
+              photos={project.images || []}
+              gitHubLink={project.github || "#"}
+              liveLink={project.link || "#"}
               category={project.category}
             />
           ))}

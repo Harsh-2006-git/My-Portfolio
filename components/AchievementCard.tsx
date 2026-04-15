@@ -39,7 +39,15 @@ export default function AchievementCard({ title, description, date, icon }: Achi
           <span className="text-purple-400 text-sm font-medium tracking-wider">{date}</span>
         </div>
         <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-        <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
+        <div 
+          className="text-gray-400 text-sm leading-relaxed achievement-description"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
+        <style jsx global>{`
+          .achievement-description p { margin-bottom: 0.5rem; }
+          .achievement-description b, .achievement-description strong { font-weight: 700; color: #fff; }
+          .achievement-description ul, .achievement-description ol { margin-left: 1.5rem; margin-bottom: 0.5rem; }
+        `}</style>
       </div>
     </motion.div>
   );

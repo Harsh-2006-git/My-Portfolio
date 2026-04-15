@@ -9,18 +9,24 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.9.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.37.0",
+    "jose": "^6.2.2",
     "lucide-react": "^0.577.0",
+    "mongoose": "^9.4.1",
     "next": "16.1.6",
     "nodemailer": "^8.0.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-simple-wysiwyg": "^3.4.1",
     "tailwind-merge": "^3.5.0",
     "tech-stack-icons": "^3.7.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/nodemailer": "^7.0.11",
     "@types/react": "^19",

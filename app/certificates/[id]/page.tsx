@@ -7,13 +7,13 @@ import { Calendar, Award, ExternalLink, ArrowLeft, ChevronLeft, ChevronRight, X,
 import Link from "next/link";
 
 interface Certificate {
-  id: number;
+  _id: string;
   title: string;
   issuer: string;
-  description: string;
   date: string;
   images: string[];
-  link: string;
+  description?: string;
+  link?: string;
 }
 
 export default function CertificateDetail() {
@@ -35,7 +35,7 @@ export default function CertificateDetail() {
     fetch("/api/certificates")
       .then((res) => res.json())
       .then((data) => {
-        const found = data.find((c: any) => c.id.toString() === id);
+        const found = data.find((c: any) => c._id.toString() === id);
         setCert(found || null);
         setLoading(false);
       })
@@ -83,48 +83,17 @@ export default function CertificateDetail() {
             onClick={() => setLightboxOpen(true)}
           >
             <img 
-              src={cert.images[activeImage]} 
+              src={cert.images?.[0] || ""} 
               alt={cert.title}
               className="w-full h-full object-contain transition-all duration-700 group-hover:scale-[1.02]"
             />
-            {/* Hover expand hint */}
             <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 backdrop-blur rounded-full p-2">
               <Maximize2 className="w-4 h-4 text-white" />
             </div>
-            {cert.images.length > 1 && (
-              <div className="absolute inset-0 flex items-center justify-between px-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button 
-                  onClick={() => setActiveImage((prev) => (prev === 0 ? cert.images.length - 1 : prev - 1))}
-                  className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 hover:bg-white/20 transition-all"
-                >
-                  <ChevronLeft className="w-6 h-6 text-white" />
-                </button>
-                <button 
-                  onClick={() => setActiveImage((prev) => (prev === cert.images.length - 1 ? 0 : prev + 1))}
-                  className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 hover:bg-white/20 transition-all"
-                >
-                  <ChevronRight className="w-6 h-6 text-white" />
-                </button>
-              </div>
-            )}
           </motion.div>
-
-          <div className="flex gap-4 overflow-x-auto pb-4">
-            {cert.images.map((img, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveImage(idx)}
-                className={`flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border-2 transition-all ${
-                  activeImage === idx ? 'border-blue-500 scale-105 shadow-[0_0_15px_rgba(0,163,255,0.4)]' : 'border-white/5 opacity-50 hover:opacity-100'
-                }`}
-              >
-                <img src={img} className="w-full h-full object-contain bg-black/40" />
-              </button>
-            ))}
-          </div>
         </div>
 
-        {/* Right: Info */}
+          {/* Right: Info */}
         <div className="space-y-10">
           <div className="space-y-4">
              <motion.div 
@@ -161,41 +130,34 @@ export default function CertificateDetail() {
                 {cert.date}
               </div>
             </div>
+            {cert.link && (
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Verify</p>
+                <a href={cert.link} target="_blank" className="flex items-center gap-2 text-blue-400 hover:text-blue-300 font-bold transition-colors">
+                  <ExternalLink className="w-4 h-4" /> View Certificate
+                </a>
+              </div>
+            )}
           </motion.div>
-
-          <motion.div 
-             initial={{ opacity: 0, y: 20 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.3 }}
-             className="space-y-6"
-          >
-            <h3 className="text-sm font-black text-white uppercase tracking-widest border-l-4 border-blue-500 pl-4">Description</h3>
-            <div className="text-gray-400 font-bold leading-relaxed text-lg whitespace-pre-wrap space-y-4">
-              {cert.description.split('\n\n').map((paragraph, i) => (
-                <p key={i}>
-                  {paragraph.split('\n').map((line, j) => (
-                    <React.Fragment key={j}>
-                      {line.startsWith('### ') ? (
-                        <span className="block text-xl font-black text-white mt-4 mb-2">{line.replace('### ', '')}</span>
-                      ) : (
-                        <span>
-                          {line.split(/(\*\*.*?\*\*)/g).map((part, k) => (
-                            part.startsWith('**') && part.endsWith('**') ? (
-                              <strong key={k} className="text-blue-400 font-black">{part.slice(2, -2)}</strong>
-                            ) : (
-                              part
-                            )
-                          ))}
-                        </span>
-                      )}
-                      {j < paragraph.split('\n').length - 1 && <br />}
-                    </React.Fragment>
-                  ))}
-                </p>
-              ))}
-            </div>
-          </motion.div>
-
+          {cert.description && (
+            <motion.div 
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ delay: 0.3 }}
+               className="space-y-6"
+            >
+              <h3 className="text-sm font-black text-white uppercase tracking-widest border-l-4 border-blue-500 pl-4">Description</h3>
+              <div 
+                className="text-gray-400 font-bold leading-relaxed text-lg cert-detail-description"
+                dangerouslySetInnerHTML={{ __html: cert.description }}
+              />
+              <style jsx global>{`
+                .cert-detail-description ul { list-style-type: disc; padding-left: 1.5rem; margin-top: 1rem; margin-bottom: 1rem; }
+                .cert-detail-description li { margin-bottom: 0.5rem; }
+                .cert-detail-description p { margin-bottom: 1rem; }
+              `}</style>
+            </motion.div>
+          )}
         </div>
       </div>
     </main>
@@ -223,35 +185,11 @@ export default function CertificateDetail() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            src={cert.images[activeImage]} 
+            src={cert.images?.[0] || ""} 
             alt={cert.title}
             className="max-w-full max-h-full object-contain shadow-2xl rounded-lg"
-            onClick={(e) => e.stopPropagation()} // Prevent clicking image from closing
+            onClick={(e) => e.stopPropagation()}
           />
-
-          {/* Navigation controls if there are multiple images */}
-          {cert.images.length > 1 && (
-            <div className="absolute inset-y-0 left-4 right-4 flex items-center justify-between pointer-events-none">
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveImage((prev) => (prev === 0 ? cert.images.length - 1 : prev - 1));
-                }}
-                className="w-14 h-14 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center border border-white/20 hover:bg-white/20 hover:scale-110 transition-all pointer-events-auto"
-              >
-                <ChevronLeft className="w-8 h-8 text-white" />
-              </button>
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveImage((prev) => (prev === cert.images.length - 1 ? 0 : prev + 1));
-                }}
-                className="w-14 h-14 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center border border-white/20 hover:bg-white/20 hover:scale-110 transition-all pointer-events-auto"
-              >
-                <ChevronRight className="w-8 h-8 text-white" />
-              </button>
-            </div>
-          )}
         </div>
       )}
     </>

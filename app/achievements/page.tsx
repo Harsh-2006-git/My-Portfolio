@@ -8,7 +8,7 @@ import Link from "next/link";
 import AutoImageScroller from "@/components/AutoImageScroller";
 
 interface Achievement {
-  id: number;
+  _id: string;
   title: string;
   description: string;
   date: string;
@@ -61,7 +61,7 @@ export default function AchievementsPage() {
           {achievements.map((item) => {
             const IconComp = iconMap[item.icon] || Award;
             return (
-              <Link href={`/achievements/${item.id}`} key={item.id} className="block group">
+              <Link href={`/achievements/${item._id}`} key={item._id} className="block group">
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -85,7 +85,15 @@ export default function AchievementsPage() {
                       
                       <div className="space-y-2">
                         <h3 className="text-sm md:text-xl font-black text-white group-hover:text-blue-400 transition-colors leading-tight">{item.title}</h3>
-                        <p className="text-[11px] md:text-sm text-gray-500 font-bold leading-relaxed line-clamp-3 group-hover:text-gray-400 transition-colors">{item.description}</p>
+                        <div 
+                          className="text-[11px] md:text-sm text-gray-500 font-bold leading-relaxed line-clamp-3 group-hover:text-gray-400 transition-colors ach-description"
+                          dangerouslySetInnerHTML={{ __html: item.description }}
+                        />
+                        <style jsx global>{`
+                          .ach-description * { margin: 0; padding: 0; }
+                          .ach-description p { margin-bottom: 0.5rem; }
+                        `}</style>
+
                       </div>
                     </div>
 

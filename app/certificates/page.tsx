@@ -6,12 +6,13 @@ import { Award, ExternalLink, Calendar, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 interface Certificate {
-  id: number;
+  _id: string;
   title: string;
   issuer: string;
   date: string;
   images: string[];
-  link: string;
+  description?: string;
+  link?: string;
 }
 
 export default function CertificatesPage() {
@@ -49,7 +50,7 @@ export default function CertificatesPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {certificates.map((cert) => (
-            <Link href={`/certificates/${cert.id}`} key={cert.id} className="block group">
+            <Link href={`/certificates/${cert._id}`} key={cert._id} className="block group">
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -60,7 +61,7 @@ export default function CertificatesPage() {
                     {/* Fixed ratio — uniform card height, full cert visible */}
                     <div className="w-full bg-white border-b border-white/10" style={{ aspectRatio: "4/3", overflow: "hidden" }}>
                       <img
-                        src={cert.images[0]}
+                        src={cert.images?.[0] || ""}
                         alt={cert.title}
                         className="w-full h-full object-contain"
                       />
@@ -70,7 +71,16 @@ export default function CertificatesPage() {
                       <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4" /> {cert.date}
                     </div>
                     <h3 className="text-base md:text-xl font-black text-white mb-1.5 md:mb-2 group-hover:text-blue-400 transition-colors leading-tight">{cert.title}</h3>
-                    <p className="text-xs md:text-sm text-gray-500 font-bold mb-4 md:mb-6">{cert.issuer}</p>
+                    <p className="text-xs md:text-sm text-gray-500 font-bold mb-2">{cert.issuer}</p>
+                    {cert.description && (
+                      <div 
+                        className="text-xs text-gray-400 line-clamp-2 md:mb-6 mb-4 font-medium leading-relaxed cert-description"
+                        dangerouslySetInnerHTML={{ __html: cert.description }}
+                      />
+                    )}
+                    <style jsx global>{`
+                      .cert-description p { margin-bottom: 0.2rem; }
+                    `}</style>
                     
                     <div className="flex items-center justify-between mt-auto pt-3 md:pt-4 border-t border-white/5">
                       <span className="text-blue-400 font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] flex items-center gap-2 group/link">

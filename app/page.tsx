@@ -17,7 +17,7 @@ import Link from "next/link";
 import { Award, Trophy, Code, Medal, Star, TrendingUp, Calendar, Briefcase } from "lucide-react";
 
 interface Achievement {
-  id: number;
+  _id: string;
   title: string;
   description: string;
   date: string;
@@ -26,24 +26,22 @@ interface Achievement {
 }
 
 interface Certificate {
-  id: number;
+  _id: string;
   title: string;
   issuer: string;
-  description: string;
   date: string;
   images: string[];
-  link: string;
+  link?: string;
 }
 
 interface Project {
-  id: number;
-  name: string;
+  _id: string;
+  title: string;
   description: string;
-  longDescription?: string;
-  photos: string[];
+  images: string[];
   techStack: string[];
-  gitHubLink?: string;
-  liveLink?: string;
+  github?: string;
+  link?: string;
   category?: string;
 }
 
@@ -407,16 +405,16 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project) => (
               <ProjectCard
-                key={project.id}
-                id={project.id}
-                name={project.name}
+                key={project._id}
+                id={project._id}
+                name={project.title}
                 category={project.category}
                 description={project.description}
-                longDescription={project.longDescription}
-                photos={project.photos}
+                longDescription={project.description}
+                photos={project.images || []}
                 techStack={project.techStack}
-                gitHubLink={project.gitHubLink}
-                liveLink={project.liveLink}
+                gitHubLink={project.github}
+                liveLink={project.link}
               />
             ))}
           </div>
@@ -433,7 +431,7 @@ export default function Home() {
               {achievements.slice(0, 3).map((item) => {
                 const IconComp = iconMap[item.icon] || Award;
                 return (
-                  <Link href={`/achievements/${item.id}`} key={item.id} className="block group">
+                  <Link href={`/achievements/${item._id}`} key={item._id} className="block group">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -452,7 +450,13 @@ export default function Home() {
                             <span className="text-[8px] font-black text-gray-500 uppercase tracking-widest">{item.date}</span>
                           </div>
                           <h3 className="text-sm font-black text-white group-hover:text-blue-400 transition-colors leading-snug mb-1.5 line-clamp-2">{item.title}</h3>
-                          <p className="text-[11px] text-gray-500 font-bold leading-relaxed line-clamp-2">{item.description}</p>
+                          <div 
+                            className="text-[11px] text-gray-500 font-bold leading-relaxed line-clamp-2 ach-home-description"
+                            dangerouslySetInnerHTML={{ __html: item.description }}
+                          />
+                          <style jsx global>{`
+                            .ach-home-description * { margin: 0; padding: 0; }
+                          `}</style>
 
                           <div className="mt-4 text-[9px] font-black text-blue-500 uppercase tracking-[0.2em] flex items-center gap-2">
                             View Details <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />

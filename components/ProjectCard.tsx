@@ -40,15 +40,28 @@ export default function ProjectCard({ id, name, description, longDescription, ph
         {/* Card Info Content */}
         <div className="p-4 md:p-6 space-y-3 flex-1 flex flex-col">
           <div className="space-y-2 md:space-y-3 flex-1">
-            <h3 className="text-lg md:text-xl font-black text-white tracking-tight leading-tight uppercase">{name}</h3>
-            <p className="text-[10px] md:text-sm text-gray-400 leading-relaxed font-bold line-clamp-3 opacity-90">{description}</p>
+            <h3 className="text-lg md:text-xl font-black text-white tracking-tight leading-tight line-clamp-2">{name}</h3>
+            <div 
+              className="text-[10px] md:text-sm text-gray-400 leading-relaxed font-bold line-clamp-2 opacity-90 transition-all project-description"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
+            <style jsx global>{`
+              .project-description * { margin: 0; padding: 0; }
+              .project-description p { margin-bottom: 0.5rem; }
+              .project-description b, .project-description strong { font-weight: 900; color: #fff; }
+            `}</style>
             
-            <div className="flex flex-wrap gap-1 md:gap-1.5 pt-1">
-              {techStack.map((tech) => (
-                <span key={tech} className="px-1.5 py-0.5 bg-white/5 rounded text-[8px] md:text-[9px] font-black text-blue-400/60 border border-white/5 uppercase tracking-wider">
+            <div className="flex flex-wrap gap-1 md:gap-1.5 pt-1 overflow-hidden h-6 md:h-7 items-center">
+              {techStack.slice(0, 3).map((tech) => (
+                <span key={tech} className="px-2 py-0.5 bg-white/5 rounded text-[8px] md:text-[9px] font-black text-blue-400/60 border border-white/5 uppercase tracking-wider whitespace-nowrap">
                   {tech}
                 </span>
               ))}
+              {techStack.length > 3 && (
+                <span className="px-2 py-0.5 bg-blue-600/10 rounded text-[8px] md:text-[9px] font-black text-blue-400 border border-blue-500/20 uppercase tracking-wider whitespace-nowrap">
+                  +{techStack.length - 3} more
+                </span>
+              )}
             </div>
           </div>
 
