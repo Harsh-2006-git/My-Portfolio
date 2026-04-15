@@ -135,8 +135,7 @@ export const metadata: Metadata = {
   },
 
   verification: {
-    // Add your Google Search Console verification code here when you have it
-    // google: "your-google-verification-code",
+    google: "qd9gXA_heDqopt22autE6UkN3gnBPIek-1G2FAd_bjg",
   },
 
   category: "technology",
