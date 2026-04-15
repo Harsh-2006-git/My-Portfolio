@@ -14,27 +14,39 @@ export async function POST(req: Request) {
     }
 
     await dbConnect();
+    console.log("Seeding started...");
 
-    // Seed Data (Append only, no deletion)
-    if (seedData.projects && seedData.projects.length) {
-      for (const p of seedData.projects) {
-        await Project.findOneAndUpdate({ title: p.title }, p, { upsert: true });
+    const buildOps = (data: any[]) => data.map(item => ({
+      updateOne: {
+        filter: { title: item.title },
+        update: { $set: item },
+        upsert: true
       }
+    }));
+
+    // Perform bulk updates to avoid timeouts
+    const tasks = [];
+    
+    if (seedData.projects?.length) {
+      tasks.push(Project.bulkWrite(buildOps(seedData.projects)));
     }
-    if (seedData.achievements && seedData.achievements.length) {
-      for (const a of seedData.achievements) {
-        await Achievement.findOneAndUpdate({ title: a.title }, a, { upsert: true });
-      }
+    if (seedData.achievements?.length) {
+      tasks.push(Achievement.bulkWrite(buildOps(seedData.achievements)));
     }
-    if (seedData.certificates && seedData.certificates.length) {
-      for (const c of seedData.certificates) {
-        await Certificate.findOneAndUpdate({ title: c.title }, c, { upsert: true });
-      }
+    if (seedData.certificates?.length) {
+      tasks.push(Certificate.bulkWrite(buildOps(seedData.certificates)));
     }
 
-    return NextResponse.json({ message: "Database synchronized with seed data! Existing custom projects were preserved." });
+    await Promise.all(tasks);
+    console.log("Seeding completed successfully.");
+
+    return NextResponse.json({ 
+      message: "Database synchronized with seed data! All items updated/added successfully." 
+    });
   } catch (error: any) {
-    console.error("Seed API Error:", error.message);
-    return NextResponse.json({ error: "Failed to seed database: " + error.message }, { status: 500 });
+    console.error("Seed API Error:", error);
+    return NextResponse.json({ 
+      error: "Failed to seed database: " + (error.message || "Unknown error") 
+    }, { status: 500 });
   }
 }
