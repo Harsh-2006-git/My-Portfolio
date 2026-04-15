@@ -183,8 +183,8 @@ export default function AdminDashboard() {
                 key={key}
                 onClick={() => { setActiveTab(key); setSidebarOpen(false); }}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-left group ${active
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20"
-                    : "text-zinc-400 hover:bg-white/5 hover:text-white"
+                  ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20"
+                  : "text-zinc-400 hover:bg-white/5 hover:text-white"
                   }`}
               >
                 <Icon size={16} className={active ? "text-white" : "text-zinc-500 group-hover:text-white"} />
@@ -243,11 +243,10 @@ export default function AdminDashboard() {
               <RefreshCw size={15} />
             </button>
 
-            <button 
-              onClick={() => setIsReorderMode(!isReorderMode)} 
-              className={`flex items-center gap-2 p-2 px-3 border rounded-xl transition-all font-bold text-xs ${
-                isReorderMode ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-zinc-500 hover:text-white hover:bg-white/5 border-white/5"
-              }`}
+            <button
+              onClick={() => setIsReorderMode(!isReorderMode)}
+              className={`flex items-center gap-2 p-2 px-3 border rounded-xl transition-all font-bold text-xs ${isReorderMode ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-zinc-500 hover:text-white hover:bg-white/5 border-white/5"
+                }`}
             >
               <GripVertical size={14} /> {isReorderMode ? "Finish Reordering" : "Reorder"}
             </button>
@@ -318,9 +317,8 @@ export default function AdminDashboard() {
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={() => handleDrop(index)}
                   onDragEnd={() => setDraggedIndex(null)}
-                  className={`group bg-[#0f0f1e] border rounded-2xl overflow-hidden transition-all hover:shadow-lg ${
-                    draggedIndex === index ? "border-blue-500/80 opacity-50" : "border-white/5 hover:border-blue-500/30"
-                  } ${isReorderMode ? "cursor-grab active:cursor-grabbing border-blue-500/30" : ""}`}
+                  className={`group bg-[#0f0f1e] border rounded-2xl overflow-hidden transition-all hover:shadow-lg ${draggedIndex === index ? "border-blue-500/80 opacity-50" : "border-white/5 hover:border-blue-500/30"
+                    } ${isReorderMode ? "cursor-grab active:cursor-grabbing border-blue-500/30" : ""}`}
                 >
                   <div className="relative aspect-video bg-black/40 overflow-hidden border-b border-white/5">
                     {item.images?.[0] ? (
@@ -334,9 +332,9 @@ export default function AdminDashboard() {
                     {/* Drag Handle Overlay */}
                     {isReorderMode && (
                       <div className="absolute inset-0 bg-blue-600/10 backdrop-blur-[1px] flex items-center justify-center">
-                         <div className="bg-blue-600 text-white p-3 rounded-2xl shadow-2xl scale-110 animate-pulse">
-                            <GripVertical size={24} />
-                         </div>
+                        <div className="bg-blue-600 text-white p-3 rounded-2xl shadow-2xl scale-110 animate-pulse">
+                          <GripVertical size={24} />
+                        </div>
                       </div>
                     )}
                   </div>
