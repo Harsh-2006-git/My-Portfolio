@@ -90,7 +90,7 @@ export default function AboutPage() {
       degree: "Senior Secondary (Class XII)",
       period: "2023 - 2024",
       details: "CBSE Board Percentage: 90%",
-      logo: "https://lfspandhurna.com/wp-content/uploads/2023/08/logo100.png"
+      logo: "/lfs.jpg"
     },
   ];
 

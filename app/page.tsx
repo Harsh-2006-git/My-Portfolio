@@ -14,7 +14,7 @@ import CertificateScroller from "@/components/CertificateScroller";
 import AchievementScroller from "@/components/AchievementScroller";
 import SkillScroller from "@/components/SkillScroller";
 import Link from "next/link";
-import { Award, Trophy, Code, Medal, Star, TrendingUp, Calendar, Briefcase } from "lucide-react";
+import { Award, Trophy, Code, Medal, Star, TrendingUp, Briefcase } from "lucide-react";
 
 interface Achievement {
   _id: string;
@@ -127,22 +127,7 @@ const experiences = [
   },
 ];
 
-const education = [
-  {
-    school: "Madhav Institute of Technology and Science Gwalior",
-    degree: "Bachelor of Technology in IT",
-    period: "2024 - 2028",
-    details: "Current GPA: 8.2",
-    logo: "/mits-logo.png"
-  },
-  {
-    school: "Little Flower School Pandhurna",
-    degree: "Senior Secondary (Class XII)",
-    period: "2023 - 2024",
-    details: "CBSE Board Percentage: 90%",
-    logo: "https://lfspandhurna.com/wp-content/uploads/2023/08/logo100.png"
-  },
-];
+
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -334,63 +319,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Education Section */}
-        <section className="space-y-12">
-          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-widest border-l-4 border-blue-600 pl-6 text-white">Education</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {education.map((edu) => (
-              <motion.div
-                key={edu.school}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="relative group h-full"
-              >
-                {/* Glow on hover */}
-                <div className="absolute -inset-px rounded-[40px] bg-gradient-to-r from-blue-600/0 via-blue-500/10 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
 
-                <div className="relative h-full rounded-[24px] md:rounded-[40px] bg-white/[0.03] border border-white/8 group-hover:border-blue-500/20 transition-all shadow-2xl overflow-hidden flex flex-col">
-                  {/* Top accent bar */}
-                  <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
-
-                  <div className="p-5 md:p-6 flex-grow flex flex-col relative z-10">
-                    <div className="flex justify-between items-start mb-4 md:mb-5">
-                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-white flex items-center justify-center shadow-lg flex-shrink-0 overflow-hidden">
-                        <img
-                          src={edu.logo}
-                          alt={edu.school}
-                          className="w-full h-full object-contain p-1"
-                        />
-                      </div>
-                      <span className="text-[9px] md:text-xs font-black text-blue-400 uppercase tracking-widest bg-blue-500/5 px-2.5 py-1.5 md:px-3 md:py-1.5 rounded-full border border-blue-500/15 flex items-center gap-1 md:gap-1.5">
-                        <Calendar className="w-3 h-3" />
-                        {edu.period}
-                      </span>
-                    </div>
-
-                    <h3 className="text-base md:text-xl font-black text-white group-hover:text-blue-300 transition-colors leading-snug mb-1 md:mb-2">
-                      {edu.degree}
-                    </h3>
-
-                    <p className="text-cyan-400/80 font-black text-[10px] md:text-xs uppercase tracking-[0.1em] mb-1.5 md:mb-5 flex items-center gap-2">
-                      <span className="w-2.5 md:w-3 h-px bg-cyan-400/50 flex-shrink-0" />
-                      {edu.school}
-                    </p>
-
-                    <div className="mt-1 md:mt-auto pt-0 md:pt-4 border-t-0 md:border-t border-white/5">
-                      <span className="inline-block text-[9px] md:text-[10px] font-black text-gray-300 bg-white/5 border border-white/10 px-2 py-1 md:px-3 md:py-1.5 rounded-md shadow-sm">
-                        {edu.details}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Bottom accent */}
-                  <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/20 to-transparent mt-auto" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
 
 
 
