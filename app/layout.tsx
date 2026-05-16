@@ -99,7 +99,7 @@ export const metadata: Metadata = {
       "Harsh Manmode — Full-Stack Developer from MITS Gwalior. Hackathon winner, creator of MITS Alumni Portal, building impactful digital solutions with React, Node.js & MongoDB.",
     images: [
       {
-        url: "/og-image.png",
+        url: "https://www.harshmanmode.tech/og-image.png",
         width: 1200,
         height: 630,
         alt: "Harsh Manmode — Full-Stack Developer Portfolio",
@@ -109,10 +109,10 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Harsh Manmode | Full-Stack Developer from MITS Gwalior",
+    title: "Harsh Manmode | Full-Stack Developer",
     description:
       "Harsh Manmode — Full-Stack Developer from MITS Gwalior. Hackathon winner, creator of MITS Alumni Portal.",
-    images: ["/og-image.png"],
+    images: ["https://www.harshmanmode.tech/og-image.png"],
     creator: "@harshmanmode",
   },
 
