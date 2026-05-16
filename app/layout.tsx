@@ -94,7 +94,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: BASE_URL,
     siteName: "Harsh Manmode | Portfolio",
-    title: "Harsh Manmode | Full-Stack Developer from MITS Gwalior",
+    title: "Harsh Manmode | Full-Stack Developer",
     description:
       "Harsh Manmode — Full-Stack Developer from MITS Gwalior. Hackathon winner, creator of MITS Alumni Portal, building impactful digital solutions with React, Node.js & MongoDB.",
     images: [
