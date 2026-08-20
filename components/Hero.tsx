@@ -40,9 +40,9 @@ export default function Hero() {
             <a href="mailto:harshmanmode79@gmail.com" className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#ea4335] hover:border-[#ea4335] transition-all group">
               <Mail className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-white transition-colors" />
             </a>
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#34a853] hover:border-[#34a853] transition-all group">
+            <a href="tel:+918305721431" className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#34a853] hover:border-[#34a853] transition-all group" title="Call Harsh">
               <Phone className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-white transition-colors" />
-            </div>
+            </a>
           </div>
         </div>
       </div>

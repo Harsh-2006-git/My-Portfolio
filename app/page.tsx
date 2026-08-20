@@ -114,15 +114,27 @@ const skillCategories: SkillCategory[] = [
 
 const experiences = [
   {
-    company: "Second Brain Ventures, Noida",
-    role: "Full Stack Web Developer Intern",
-    period: "June 2025 – July 2025",
+    company: "Even Cargo Pvt. Ltd., New Delhi",
+    role: "Software Engineering Intern",
+    period: "Apr 2026 – Jun 2026",
+    type: "Internship",
+    logo: "/evencargo.svg",
+    points: [
+      "Architected an end-to-end Apprenticeship Management Portal with role-based access, candidate tracking, and document verification.",
+      "Built an offline-first PWA using React, Node.js, PostgreSQL, IndexedDB, and Service Workers for resilient sync in low-network zones.",
+      "Developed scalable REST APIs, analytics dashboards, and automated CI/CD pipelines using Prisma ORM, Docker, and GitHub Actions.",
+    ],
+  },
+  {
+    company: "Second Brain Ventures Pvt. Ltd., Noida",
+    role: "Full Stack Developer Intern",
+    period: "May 2025 – Jul 2025",
     type: "Internship",
     logo: "https://www.startinup.up.gov.in/crm/assets/user/images/Documents/Startup/A_STARTUP_UP_UPLC_00006623/startup_logo/168993627258128.png",
     points: [
-      "Developed responsive applications using ReactJS, Tailwind CSS.",
-      "Optimized backend algorithms and database queries, improving performance by 20%.",
-      "Reduced page load times by 30% via efficient state management.",
+      "Engineered responsive web applications with React.js and Tailwind CSS, optimizing database queries and backend APIs for scale.",
+      "Designed scalable database schemas and integrated secure REST APIs for high-reliability multi-service data processing.",
+      "Streamlined collaborative workflows, version control, code reviews, and CI/CD deployment pipelines using Git and GitHub.",
     ],
   },
 ];
@@ -251,9 +263,9 @@ export default function Home() {
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="space-y-12">
-          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-widest border-l-4 border-blue-600 pl-6 text-white">Work Experience</h2>
-          <div className="space-y-8">
+        <section id="experience" className="space-y-6 md:space-y-10">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-widest border-l-4 border-blue-600 pl-4 sm:pl-6 text-white">Work Experience</h2>
+          <div className="space-y-5 md:space-y-6">
             {experiences.map((exp) => (
               <motion.div
                 key={exp.company}
@@ -263,49 +275,49 @@ export default function Home() {
                 className="relative group"
               >
                 {/* Glow on hover */}
-                <div className="absolute -inset-px rounded-[40px] bg-gradient-to-r from-blue-600/0 via-blue-500/10 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
+                <div className="absolute -inset-px rounded-2xl md:rounded-3xl bg-gradient-to-r from-blue-600/0 via-blue-500/10 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
 
-                <div className="relative rounded-[24px] md:rounded-[40px] bg-white/[0.03] border border-white/8 group-hover:border-blue-500/20 transition-all shadow-2xl overflow-hidden">
+                <div className="relative rounded-2xl md:rounded-3xl bg-white/[0.03] border border-white/10 group-hover:border-blue-500/30 transition-all shadow-xl overflow-hidden">
                   {/* Top accent bar */}
                   <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
 
-                  <div className="p-5 md:p-8">
+                  <div className="p-4 sm:p-6 md:p-7">
                     {/* Header row */}
-                    <div className="flex flex-col md:flex-row gap-3 md:gap-4 md:items-center justify-between mb-3 md:mb-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">
                       {/* Logo + role */}
-                      <div className="flex items-center gap-4 md:gap-5">
-                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-[12px] md:rounded-2xl bg-white flex items-center justify-center shadow-lg flex-shrink-0 overflow-hidden">
+                      <div className="flex items-center gap-3 sm:gap-4">
+                        <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white/95 flex items-center justify-center shadow-md flex-shrink-0 overflow-hidden p-1.5">
                           <img
                             src={exp.logo}
                             alt={exp.company}
-                            className="w-full h-full object-contain p-1"
+                            className="w-full h-full object-contain"
                           />
                         </div>
                         <div>
-                          <span className="inline-block text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 md:px-3 md:py-1 rounded-full mb-1">{exp.type}</span>
-                          <h3 className="text-lg md:text-2xl font-black text-white group-hover:text-blue-300 transition-colors leading-tight">{exp.role}</h3>
+                          <span className="inline-block text-[8px] sm:text-[9px] font-black uppercase tracking-[0.25em] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded-full mb-1">{exp.type}</span>
+                          <h3 className="text-sm sm:text-base md:text-xl font-black text-white group-hover:text-blue-300 transition-colors leading-snug">{exp.role}</h3>
                         </div>
                       </div>
 
                       {/* Period badge */}
-                      <span className="text-[10px] md:text-xs font-black text-blue-400 uppercase tracking-widest bg-blue-500/5 px-4 py-2 md:px-5 md:py-2.5 rounded-full border border-blue-500/15 w-fit flex items-center gap-2">
-                        <Briefcase className="w-3 md:w-3.5 h-3 md:h-3.5" />
+                      <span className="text-[10px] sm:text-xs font-semibold text-blue-400 uppercase tracking-wider bg-blue-500/10 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-blue-500/20 w-fit flex items-center gap-1.5 self-start sm:self-auto flex-shrink-0">
+                        <Briefcase className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
                         {exp.period}
                       </span>
                     </div>
 
                     {/* Company */}
-                    <p className="text-cyan-400/80 font-black text-[11px] md:text-sm uppercase tracking-[0.25em] mb-3 md:mb-4 flex items-center gap-2">
-                      <span className="w-3 md:w-4 h-px bg-cyan-400/50" />
+                    <p className="text-cyan-400 font-bold text-[11px] sm:text-xs md:text-sm uppercase tracking-wider mb-3 sm:mb-4 flex items-center gap-2">
+                      <span className="w-2.5 sm:w-3.5 h-px bg-cyan-400/60" />
                       {exp.company}
                     </p>
 
                     {/* Points */}
-                    <ul className="space-y-1.5 md:space-y-2">
+                    <ul className="space-y-2 sm:space-y-2.5">
                       {exp.points.map((point, i) => (
-                        <li key={i} className="flex items-start gap-3 md:gap-4 text-xs md:text-base text-gray-400 md:text-gray-400 font-bold leading-relaxed">
-                          <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-500 flex-shrink-0" />
-                          {point}
+                        <li key={i} className="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm md:text-[14px] text-gray-300/90 font-medium leading-relaxed">
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
+                          <span>{point}</span>
                         </li>
                       ))}
                     </ul>
@@ -460,7 +472,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 mb-0.5 md:mb-1">Phone Number</p>
-                        <p className="text-xs md:text-lg font-black text-white font-cinzel uppercase tracking-wider">+91 83057-21431</p>
+                        <a href="tel:+918305721431" className="text-xs md:text-lg font-black text-white hover:text-blue-400 transition-colors font-cinzel uppercase tracking-wider">+91 83057-21431</a>
                       </div>
                     </div>
                   </div>

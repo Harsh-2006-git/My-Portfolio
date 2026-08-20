@@ -131,7 +131,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Phone Number</p>
-                  <p className="text-base md:text-lg font-black text-white font-cinzel">+91 83057-21431</p>
+                  <a href="tel:+918305721431" className="text-base md:text-lg font-black text-white hover:text-blue-400 transition-colors font-cinzel">+91 83057-21431</a>
                 </div>
               </div>
 

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <!-- Transparent background -->
+  <g transform="translate(0, 10)">
+    <!-- Location Pin Body (Blue) -->
+    <path 
+      d="M 250 380 
+         C 248 377 150 250 150 175 
+         C 150 120 195 75 250 75 
+         C 305 75 350 120 350 175 
+         C 350 250 252 377 250 380 Z" 
+      fill="#5B8EC4" 
+    />
+    
+    <!-- Center Hole of Pin -->
+    <circle cx="250" cy="175" r="45" fill="#FFFFFF" />
+
+    <!-- Orange Bar across lower part of pin -->
+    <rect x="195" y="325" width="110" height="22" rx="2" fill="#F58220" />
+
+    <!-- Wordmark "Even" -->
+    <!-- E, v, e in Orange (#F58220), n in Blue (#5B8EC4) -->
+    <text x="250" y="460" text-anchor="middle" font-family="'Georgia', 'Times New Roman', serif" font-weight="bold" font-size="95" letter-spacing="-2">
+      <tspan fill="#F58220">Eve</tspan><tspan fill="#5B8EC4">n</tspan>
+    </text>
+  </g>
+</svg>

@@ -27,9 +27,9 @@ export default function Footer() {
             <a href="mailto:harshmanmode79@gmail.com" className="w-10 h-10 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 transition-all group hover:bg-blue-600/10 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(0,163,255,0.15)] hover:-translate-y-1">
               <Mail className="w-4 h-4 md:w-6 md:h-6 text-gray-400 group-hover:text-blue-400 transition-colors" />
             </a>
-            <div className="w-10 h-10 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 transition-all group hover:bg-blue-600/10 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(0,163,255,0.15)] hover:-translate-y-1">
+            <a href="tel:+918305721431" className="w-10 h-10 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 transition-all group hover:bg-blue-600/10 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(0,163,255,0.15)] hover:-translate-y-1" title="Call Harsh">
               <Phone className="w-4 h-4 md:w-6 md:h-6 text-gray-400 group-hover:text-blue-400 transition-colors" />
-            </div>
+            </a>
           </div>
         </div>
 

@@ -4,7 +4,7 @@ import SkillScroller from "@/components/SkillScroller";
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { GraduationCap, Briefcase, Calendar, Award } from "lucide-react";
+import { GraduationCap, Briefcase, Calendar, Award, Code, Users, Trophy, ExternalLink, Sparkles } from "lucide-react";
 
 const skillCategories = [
   {
@@ -62,36 +62,84 @@ export default function AboutPage() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const experiences = [
+  const timeline = [
     {
-      company: "Second Brain Ventures, Noida",
-      role: "Full Stack Web Developer Intern",
-      period: "June 2025 – July 2025",
-      type: "Internship",
-      logo: "https://www.startinup.up.gov.in/crm/assets/user/images/Documents/Startup/A_STARTUP_UP_UPLC_00006623/startup_logo/168993627258128.png",
-      points: [
-        "Developed responsive applications using ReactJS, Tailwind CSS.",
-        "Optimized backend algorithms and database queries, improving performance by 20%.",
-        "Reduced page load times by 30% via efficient state management.",
-      ],
-    },
-  ];
-
-  const education = [
-    {
-      school: "Madhav Institute of Technology and Science Gwalior",
-      degree: "Bachelor of Technology (B.Tech) in IT",
-      period: "2024 - 2028",
-      details: "Current GPA: 8.2",
-      logo: "/mits-logo.png"
+      period: "2023 – 2024",
+      title: "Senior Secondary (Class XII)",
+      organization: "Little Flower School, Pandhurna",
+      badge: "Schooling",
+      icon: GraduationCap,
+      color: "from-blue-500 to-indigo-500",
+      accent: "text-blue-400",
+      details: "Completed CBSE Board with 90% aggregate score. Built a solid early foundation in mathematics, physics, and computer fundamentals.",
+      link: null,
     },
     {
-      school: "Little Flower School Pandhurna",
-      degree: "Senior Secondary (Class XII)",
-      period: "2023 - 2024",
-      details: "CBSE Board Percentage: 90%",
-      logo: "/lfs.jpg"
+      period: "2024 – 2028 (Present)",
+      title: "B.Tech in Information Technology",
+      organization: "Madhav Institute of Technology and Science (MITS), Gwalior",
+      badge: "Undergraduate",
+      icon: GraduationCap,
+      color: "from-indigo-500 to-blue-600",
+      accent: "text-indigo-400",
+      details: "Current GPA: 8.2. Strong core in Data Structures & Algorithms, Object-Oriented Programming, Database Systems, and scalable full-stack development.",
+      link: null,
     },
+    {
+      period: "Dec 2024 – Present",
+      title: "Technical Team Member",
+      organization: "Google Developer Groups (GDG) MITS-DU Gwalior",
+      badge: "Community & Leadership",
+      icon: Users,
+      color: "from-emerald-500 to-cyan-500",
+      accent: "text-emerald-400",
+      details: "Contributing to technical community initiatives, hosting hands-on developer workshops, coordinating tech events, and mentoring peers in web development.",
+      link: null,
+    },
+    {
+      period: "Jun 2025 – Jul 2025",
+      title: "Full Stack Developer Intern",
+      organization: "Second Brain Ventures Pvt. Ltd., Noida",
+      badge: "Internship",
+      icon: Briefcase,
+      color: "from-purple-500 to-blue-500",
+      accent: "text-purple-400",
+      details: "Engineered responsive React.js web applications, optimized backend REST APIs and database queries for 20%+ performance gains, and managed CI/CD Git workflows.",
+      link: null,
+    },
+    {
+      period: "Jan 2026 – Present",
+      title: "Core Member & Lead Developer",
+      organization: "Software Development Club (SDC), MITS Gwalior",
+      badge: "Alumni Portal Creator",
+      icon: Code,
+      color: "from-blue-500 to-cyan-400",
+      accent: "text-cyan-400",
+      details: "Architected and built the official MITS Alumni Portal (alumni.mitsgwalior.in) adopted institute-wide. Honored with the institute's prestigious Meritocracy Award 2026.",
+      link: "https://alumni.mitsgwalior.in",
+    },
+    {
+      period: "Apr 2026 – Jun 2026",
+      title: "Software Engineering Intern",
+      organization: "Even Cargo Pvt. Ltd., New Delhi",
+      badge: "Internship",
+      icon: Briefcase,
+      color: "from-amber-500 to-orange-500",
+      accent: "text-amber-400",
+      details: "Architected an end-to-end Apprenticeship Management Portal, built an offline-first PWA with IndexedDB and Service Workers, and deployed Prisma/Docker CI/CD pipelines.",
+      link: null,
+    },
+    {
+      period: "Key Milestones",
+      title: "Hackathons & Problem Solving",
+      organization: "National Competitions & Coding Platforms",
+      badge: "Achievements",
+      icon: Trophy,
+      color: "from-yellow-400 to-amber-500",
+      accent: "text-yellow-400",
+      details: "Winner of HackSetu 1.0 National Hackathon, 1st Runner-Up at Technocrats Innovation Challenge 2K26, and solved 400+ DSA problems across LeetCode and GFG.",
+      link: null,
+    }
   ];
 
   return (
@@ -112,84 +160,89 @@ export default function AboutPage() {
                 About <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 drop-shadow-[0_0_12px_rgba(0,163,255,0.4)]">Harsh</span>
               </h1>
             </div>
-            <div className="space-y-4 md:space-y-6 text-gray-400 text-sm md:text-lg leading-relaxed font-bold text-left">
+            <div className="space-y-4 md:space-y-6 text-gray-300/90 text-sm md:text-lg leading-relaxed font-medium text-left">
               <p>
-                I am a second-year B.Tech Information Technology student at MITS Gwalior, driven by a passion for software engineering and problem-solving.
+                Third-year B.Tech (Information Technology) student with strong foundations in Data Structures & Algorithms, Object Oriented Programming, and Software Development, strengthened through two software engineering internships.
               </p>
               <p>
-                With a strong foundation in Data Structures, Algorithms, and MERN stack development, I specialize in building user-focused, scalable applications. My experience as a Full Stack Intern has refined my ability to collaborate in engineering teams and deliver high-performance solutions.
+                Built REST APIs, authentication systems, and CI/CD pipelines in collaborative development team environments. Solved 400+ DSA problems, won 3 national-level hackathons, and eager to apply strong problem-solving skills while learning and building high-quality software.
               </p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Experience Section */}
-      <section id="experience" className="space-y-8 md:space-y-12">
-        <h2 className="text-xl md:text-3xl font-black uppercase tracking-widest border-l-4 border-blue-600 pl-6">Work Experience</h2>
-        <div className="space-y-6 md:space-y-8">
-          {experiences.map((exp) => (
-            <motion.div
-              key={exp.company}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative group"
-            >
-              {/* Glow on hover */}
-              <div className="absolute -inset-px rounded-[24px] md:rounded-[40px] bg-gradient-to-r from-blue-600/0 via-blue-500/10 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
+      {/* Chronological Journey Timeline Section */}
+      <section id="timeline" className="space-y-8 md:space-y-12">
+        <div className="space-y-2 border-l-4 border-blue-600 pl-4 sm:pl-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-widest text-white">Journey &amp; Milestones</h2>
+          <p className="text-xs sm:text-sm text-gray-400 font-bold">Chronological path from schooling to leadership, internships, and national hackathons</p>
+        </div>
 
-              <div className="relative rounded-[24px] md:rounded-[40px] bg-white/[0.03] border border-white/8 group-hover:border-blue-500/20 transition-all shadow-2xl overflow-hidden">
-                {/* Top accent bar */}
-                <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
+        <div className="relative pl-6 sm:pl-10 space-y-6 sm:space-y-8 before:absolute before:left-2.5 sm:before:left-4 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-blue-500 before:via-cyan-400 before:to-purple-600">
+          {timeline.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="relative group"
+              >
+                {/* Milestone Node on vertical line */}
+                <div className="absolute -left-[30px] sm:-left-[44px] top-1.5 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#070514] border-2 border-blue-500/80 group-hover:border-cyan-400 flex items-center justify-center shadow-[0_0_12px_rgba(59,130,246,0.5)] transition-all z-10">
+                  <Icon className={`w-3 h-3 sm:w-4 sm:h-4 ${item.accent}`} />
+                </div>
 
-                <div className="p-5 md:p-8">
-                  {/* Header row */}
-                  <div className="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-4">
-                    {/* Logo + role */}
-                    <div className="flex items-center gap-4 md:gap-5">
-                      <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-white flex items-center justify-center shadow-lg flex-shrink-0 overflow-hidden">
-                        <img
-                          src={exp.logo}
-                          alt={exp.company}
-                          className="w-full h-full object-contain p-1"
-                        />
-                      </div>
-                      <div>
-                        <span className="inline-block text-[8px] font-black uppercase tracking-[0.3em] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 rounded-full mb-1.5">{exp.type}</span>
-                        <h3 className="text-sm md:text-2xl font-black text-white group-hover:text-blue-300 transition-colors leading-tight">{exp.role}</h3>
-                      </div>
+                {/* Timeline Card */}
+                <div className="relative rounded-2xl md:rounded-3xl bg-white/[0.03] border border-white/10 group-hover:border-blue-500/30 transition-all p-4 sm:p-6 shadow-xl space-y-3 overflow-hidden">
+                  {/* Subtle top glow */}
+                  <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
+
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 rounded-full">
+                        {item.badge}
+                      </span>
+                      <h3 className="text-sm sm:text-lg md:text-xl font-black text-white group-hover:text-blue-300 transition-colors">
+                        {item.title}
+                      </h3>
                     </div>
 
-                    {/* Period badge */}
-                    <span className="text-[10px] md:text-xs font-black text-blue-400 uppercase tracking-widest bg-blue-500/5 px-4 py-2 md:px-5 md:py-2.5 rounded-full border border-blue-500/15 w-fit flex items-center gap-2">
-                      <Briefcase className="w-3 md:w-3.5 h-3 md:h-3.5" />
-                      {exp.period}
+                    <span className="text-[10px] sm:text-xs font-semibold text-gray-300 bg-white/5 px-3 py-1 rounded-full border border-white/10 w-fit flex-shrink-0 flex items-center gap-1.5">
+                      <Calendar className="w-3 h-3 text-blue-400" />
+                      {item.period}
                     </span>
                   </div>
 
-                  {/* Company */}
-                  <p className="text-cyan-400/80 font-black text-[11px] md:text-sm uppercase tracking-[0.25em] mb-4 flex items-center gap-2">
-                    <span className="w-3 md:w-4 h-px bg-cyan-400/50" />
-                    {exp.company}
+                  <p className="text-cyan-400 font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2">
+                    <span className="w-2.5 h-px bg-cyan-400/60" />
+                    {item.organization}
                   </p>
 
-                  {/* Points */}
-                  <ul className="space-y-1.5 md:space-y-2">
-                    {exp.points.map((point, i) => (
-                      <li key={i} className="flex items-start gap-3 md:gap-4 text-gray-400 font-bold leading-relaxed text-[11px] md:text-sm">
-                        <span className="mt-1.5 w-1 md:w-1.5 h-1 md:h-1.5 rounded-full bg-blue-500 flex-shrink-0" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <p className="text-xs sm:text-sm md:text-[14px] text-gray-300/90 font-medium leading-relaxed">
+                    {item.details}
+                  </p>
 
-                {/* Bottom accent */}
-                <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/20 to-transparent mt-auto" />
-              </div>
-            </motion.div>
-          ))}
+                  {item.link && (
+                    <div className="pt-2">
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 hover:text-cyan-300 transition-colors bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 px-3 py-1.5 rounded-lg"
+                      >
+                        <span>Visit {item.title}</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 
@@ -208,63 +261,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Education Section */}
-      <section className="space-y-8 md:space-y-12">
-        <h2 className="text-xl md:text-3xl font-black uppercase tracking-widest border-l-4 border-blue-600 pl-6">Education</h2>
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-          {education.map((edu) => (
-            <motion.div
-              key={edu.school}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative group h-full"
-            >
-              {/* Glow on hover */}
-              <div className="absolute -inset-px rounded-[24px] md:rounded-[40px] bg-gradient-to-r from-blue-600/0 via-blue-500/10 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
-
-              <div className="relative h-full rounded-[24px] md:rounded-[40px] bg-white/[0.03] border border-white/8 group-hover:border-blue-500/20 transition-all shadow-2xl overflow-hidden flex flex-col">
-                {/* Top accent bar */}
-                <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
-
-                <div className="p-5 md:p-6 flex-grow flex flex-col relative z-10">
-                  <div className="flex justify-between items-start mb-4 md:mb-5">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white flex items-center justify-center shadow-lg flex-shrink-0 overflow-hidden">
-                      <img
-                        src={edu.logo}
-                        alt={edu.school}
-                        className="w-full h-full object-contain p-1"
-                      />
-                    </div>
-                    <span className="text-[9px] md:text-xs font-black text-blue-400 uppercase tracking-widest bg-blue-500/5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-blue-500/15 flex items-center gap-1.5">
-                       <Calendar className="w-3 h-3" />
-                       {edu.period}
-                    </span>
-                  </div>
-
-                  <h3 className="text-sm md:text-xl font-black text-white group-hover:text-blue-300 transition-colors leading-snug mb-1.5 md:mb-2">
-                    {edu.degree}
-                  </h3>
-                  
-                  <p className="text-cyan-400/80 font-black text-[10px] md:text-xs uppercase tracking-[0.1em] mb-4 md:mb-5 flex items-center gap-2">
-                    <span className="w-3 h-px bg-cyan-400/50 flex-shrink-0" />
-                    {edu.school}
-                  </p>
-
-                  <div className="mt-auto pt-3 md:pt-4 border-t border-white/5">
-                    <span className="inline-block text-[9px] md:text-[10px] font-black text-gray-300 bg-white/5 border border-white/10 px-2.5 py-1 md:px-3 md:py-1.5 rounded-md shadow-sm">
-                      {edu.details}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Bottom accent */}
-                <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/20 to-transparent mt-auto" />
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
       {/* Social Profiles Section */}
       <section className="space-y-8 md:space-y-12">
         <h2 className="text-xl md:text-3xl font-black uppercase tracking-widest border-l-4 border-blue-600 pl-6">Connect Digitally</h2>
