@@ -9,8 +9,8 @@ export async function GET() {
     const projects = await Project.find({}).sort({ order: 1, createdAt: -1 });
     return NextResponse.json(projects);
   } catch (error: any) {
-    console.error("Projects GET Error:", error.message);
-    return NextResponse.json({ error: "Failed to fetch projects" }, { status: 500 });
+    console.warn("Projects GET: Database offline/unreachable, returning empty list:", error.message);
+    return NextResponse.json([]);
   }
 }
 

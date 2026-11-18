@@ -32,7 +32,7 @@ const poetsenOne = Poetsen_One({
 });
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["600"],
+  weight: ["500", "600", "700", "800"],
   variable: "--font-plus-jakarta-sans",
 });
 const poppins = Poppins({

@@ -9,8 +9,8 @@ export async function GET() {
     const achievements = await Achievement.find({}).sort({ order: 1, createdAt: -1 });
     return NextResponse.json(achievements);
   } catch (error: any) {
-    console.error("Achievements GET Error:", error.message);
-    return NextResponse.json({ error: "Failed to fetch achievements" }, { status: 500 });
+    console.warn("Achievements GET: Database offline/unreachable, returning empty list:", error.message);
+    return NextResponse.json([]);
   }
 }
 

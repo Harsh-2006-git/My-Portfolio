@@ -1,4 +1,12 @@
 import mongoose from "mongoose";
+import dns from "dns";
+
+// Fix Windows Node.js querySrv ECONNREFUSED on MongoDB Atlas SRV lookups
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch {
+  // Ignore in restricted environments
+}
 
 const MONGODB_URI = process.env.MONGODB_URI || "";
 
@@ -29,6 +37,7 @@ async function dbConnect() {
   if (!cached!.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 5000,
     };
 
     cached!.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {

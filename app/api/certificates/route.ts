@@ -9,8 +9,8 @@ export async function GET() {
     const certificates = await Certificate.find({}).sort({ order: 1, createdAt: -1 });
     return NextResponse.json(certificates);
   } catch (error: any) {
-    console.error("Certificates GET Error:", error.message);
-    return NextResponse.json({ error: "Failed to fetch certificates" }, { status: 500 });
+    console.warn("Certificates GET: Database offline/unreachable, returning empty list:", error.message);
+    return NextResponse.json([]);
   }
 }
 

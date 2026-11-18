@@ -176,16 +176,21 @@ export default function Home() {
       setLoading(false);
     }, 2800);
 
-    // Fetch dynamic data
+    // Fetch dynamic data safely
     Promise.all([
-      fetch("/api/achievements").then(res => res.json()),
-      fetch("/api/certificates").then(res => res.json()),
-      fetch("/api/projects").then(res => res.json())
+      fetch("/api/achievements").then(res => res.json()).catch(() => []),
+      fetch("/api/certificates").then(res => res.json()).catch(() => []),
+      fetch("/api/projects").then(res => res.json()).catch(() => [])
     ]).then(([achData, certData, projData]) => {
-      setAchievements(achData);
-      setCertificates(certData);
-      setProjects(projData.slice(0, 3));
-    }).catch(err => console.error("Error fetching data:", err));
+      setAchievements(Array.isArray(achData) ? achData : []);
+      setCertificates(Array.isArray(certData) ? certData : []);
+      setProjects(Array.isArray(projData) ? projData.slice(0, 3) : []);
+    }).catch(err => {
+      console.error("Error fetching data:", err);
+      setAchievements([]);
+      setCertificates([]);
+      setProjects([]);
+    });
 
     setIsMobile(window.innerWidth < 768);
 
@@ -239,11 +244,10 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-8 md:pt-16 space-y-24 md:space-y-32 pb-24 font-plusJakartaSans min-h-screen overflow-x-hidden">
-        <Hero />
+      {/* Full-screen Hero Section */}
+      <Hero />
 
-
-
+      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-16 md:pt-28 space-y-24 md:space-y-32 pb-24 font-plusJakartaSans min-h-screen overflow-x-hidden">
         {/* Tech Stack Section */}
         <section id="skills" className="space-y-6 md:space-y-10">
           <div className="flex flex-row items-center justify-between border-l-4 border-blue-600 pl-6 gap-4">
@@ -344,7 +348,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
+            {(Array.isArray(projects) ? projects : []).map((project) => (
               <ProjectCard
                 key={project._id}
                 id={project._id}
@@ -369,7 +373,7 @@ export default function Home() {
           <div className="space-y-6">
             {/* Desktop Grid */}
             <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-10">
-              {achievements.slice(0, 3).map((item) => {
+              {(Array.isArray(achievements) ? achievements : []).slice(0, 3).map((item) => {
                 const IconComp = iconMap[item.icon] || Award;
                 return (
                   <Link href={`/achievements/${item._id}`} key={item._id} className="block group">
@@ -412,7 +416,7 @@ export default function Home() {
 
             {/* Mobile Scroller */}
             <div className="md:hidden -mx-6">
-              <AchievementScroller achievements={achievements} />
+              <AchievementScroller achievements={Array.isArray(achievements) ? achievements : []} />
             </div>
 
             <div className="flex justify-center mt-4">
@@ -430,7 +434,7 @@ export default function Home() {
           </div>
           <div className="space-y-4">
             <div className="-mx-6">
-              <CertificateScroller certificates={certificates} />
+              <CertificateScroller certificates={Array.isArray(certificates) ? certificates : []} />
             </div>
             <div className="flex justify-center">
               <Link href="/certificates" className="group flex items-center gap-2.5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 hover:text-white transition-all bg-white/5 hover:bg-blue-600 px-5 py-2.5 rounded-xl border border-white/5 hover:border-blue-500 transition-all shadow-xl">
@@ -441,99 +445,157 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="pt-6 pb-8 border-t border-white/5 space-y-8 md:space-y-16">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mb-4 md:mb-16">
-              <h2 className="text-sm font-black text-blue-500 uppercase tracking-[0.4em] mb-2 md:mb-4">Get in Touch</h2>
-              <h3 className="text-lg md:text-5xl font-black text-white tracking-tight leading-[1.1] mb-4 md:mb-6 font-cinzel">Let's Build Something Extraordinary</h3>
-              <p className="text-gray-500 font-bold text-xs md:text-base leading-relaxed opacity-80">
-                I'm always excited to hear about new challenges and creative ideas. Whether you have a specific project in mind or just want to explore a shared vision, feel free to drop me a message.
-              </p>
-            </div>
+        <section id="contact" className="pt-4 pb-8">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6">
+            {/* Unified Glassmorphism Box Container */}
+            <div className="relative rounded-3xl bg-[#070b16]/90 border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)] backdrop-blur-xl p-6 sm:p-8 md:p-10 overflow-hidden">
+              {/* Subtle ambient decorative corner glows */}
+              <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-blue-600/[0.08] blur-[90px] pointer-events-none" />
+              <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-indigo-600/[0.06] blur-[90px] pointer-events-none" />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
-              {/* Left Column: Info */}
-              <div className="space-y-8 md:space-y-12">
-                <div className="space-y-6 md:space-y-8">
-                  <h4 className="text-lg font-black text-white uppercase tracking-widest border-l-4 border-blue-500 pl-6">Contact Channels</h4>
-                  <div className="space-y-6 md:space-y-10">
-                    <div className="group flex items-center gap-4 md:gap-6">
-                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/20 transition-all shadow-lg">
-                        <Mail className="w-5 h-5 md:w-6 md:h-6 text-blue-400" />
+              {/* Header inside the box */}
+              <div className="relative z-10 max-w-2xl mb-8 md:mb-10">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-[11px] font-semibold text-blue-400 mb-3 shadow-[0_0_10px_rgba(37,99,235,0.15)]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_6px_#3b82f6] animate-pulse" />
+                  <span className="tracking-widest uppercase">Get in Touch</span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
+                  Let's Build Something Extraordinary
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-400 font-medium mt-2 leading-relaxed">
+                  I'm always excited to hear about new challenges and creative ideas. Whether you have a specific project in mind or just want to explore a shared vision, feel free to drop me a message.
+                </p>
+              </div>
+
+              {/* 2-Column Grid inside the box */}
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-stretch">
+                {/* Left Column (5 cols): Channels */}
+                <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
+                  <div className="space-y-4">
+                    <h4 className="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
+                      <span className="w-1.5 h-3.5 bg-blue-500 rounded-full" />
+                      Contact Channels
+                    </h4>
+
+                    {/* Email Card */}
+                    <a
+                      href="mailto:harshmanmode79@gmail.com"
+                      className="group p-3.5 sm:p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-blue-500/30 transition-all duration-300 flex items-center gap-3.5 cursor-pointer block"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 group-hover:bg-blue-500/20 transition-all shrink-0">
+                        <Mail className="w-4 h-4" />
                       </div>
-                      <div>
-                        <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 mb-0.5 md:mb-1">Email Address</p>
-                        <a href="mailto:harshmanmode79@gmail.com" className="text-xs md:text-lg font-black text-white hover:text-blue-400 transition-colors lowercase tracking-wider break-all md:break-normal">harshmanmode79@gmail.com</a>
+                      <div className="min-w-0">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Email Address</p>
+                        <p className="text-xs sm:text-sm font-semibold text-white group-hover:text-blue-400 transition-colors truncate">
+                          harshmanmode79@gmail.com
+                        </p>
                       </div>
-                    </div>
-                    <div className="group flex items-center gap-4 md:gap-6">
-                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/20 transition-all shadow-lg">
-                        <Phone className="w-5 h-5 md:w-6 md:h-6 text-blue-400" />
+                    </a>
+
+                    {/* Phone Card */}
+                    <a
+                      href="tel:+918305721431"
+                      className="group p-3.5 sm:p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-blue-500/30 transition-all duration-300 flex items-center gap-3.5 cursor-pointer block"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 group-hover:bg-blue-500/20 transition-all shrink-0">
+                        <Phone className="w-4 h-4" />
                       </div>
-                      <div>
-                        <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 mb-0.5 md:mb-1">Phone Number</p>
-                        <a href="tel:+918305721431" className="text-xs md:text-lg font-black text-white hover:text-blue-400 transition-colors font-cinzel uppercase tracking-wider">+91 83057-21431</a>
+                      <div className="min-w-0">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Phone Number</p>
+                        <p className="text-xs sm:text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
+                          +91 83057-21431
+                        </p>
                       </div>
+                    </a>
+                  </div>
+
+                  {/* Status Pill / Live Availability */}
+                  <div className="p-3.5 rounded-2xl bg-blue-950/20 border border-blue-500/15 flex items-center gap-3">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] animate-pulse shrink-0" />
+                    <div>
+                      <p className="text-[11px] font-bold text-white">Available for Opportunities</p>
+                      <p className="text-[10px] text-gray-400 font-medium">Open for full-stack projects & roles</p>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Right Column: Form */}
-              <div className="p-4 md:p-10 rounded-[32px] md:rounded-[40px] bg-white/5 border border-white/10 shadow-3xl space-y-4 md:space-y-8">
-                <form className="space-y-4 md:space-y-6" onSubmit={handleContactSubmit}>
-                  <div className="space-y-1.5 md:space-y-2 group">
-                    <label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1 group-focus-within:text-blue-400 transition-colors">Your Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
-                      placeholder="Full Name"
-                      className="w-full bg-white/5 border border-white/5 rounded-xl md:rounded-2xl py-3 px-5 md:py-4 md:px-6 text-xs md:text-sm text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-bold"
-                    />
-                  </div>
-                  <div className="space-y-1.5 md:space-y-2 group">
-                    <label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1 group-focus-within:text-blue-400 transition-colors">Your Email</label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData(p => ({ ...p, email: e.target.value }))}
-                      placeholder="email@address.com"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl md:rounded-2xl py-3 px-5 md:py-4 md:px-6 text-xs md:text-sm text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-bold"
-                    />
-                  </div>
-                  <div className="space-y-1.5 md:space-y-2 group">
-                    <label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1 group-focus-within:text-blue-400 transition-colors">Your Message</label>
-                    <textarea
-                      rows={3}
-                      required
-                      value={formData.message}
-                      onChange={(e) => setFormData(p => ({ ...p, message: e.target.value }))}
-                      placeholder="How can I help you?"
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl py-3 px-5 md:py-4 md:px-6 text-xs md:text-sm text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all resize-none font-bold"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={status === "loading"}
-                    className={`w-full px-8 py-3.5 md:px-10 md:py-5 font-black uppercase text-[10px] md:text-xs tracking-[0.2em] rounded-xl md:rounded-2xl transition-all shadow-2xl flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed ${status === "success" ? "bg-green-500 text-white" :
-                        status === "error" ? "bg-red-500 text-white" :
-                          "bg-white text-black hover:bg-blue-600 hover:text-white"
+                {/* Right Column (7 cols): Compact Form */}
+                <div className="lg:col-span-7 rounded-2xl bg-white/[0.02] border border-white/[0.08] p-5 sm:p-6 shadow-inner">
+                  <form className="space-y-3.5" onSubmit={handleContactSubmit}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold uppercase tracking-wider text-gray-400 ml-0.5">Your Name</label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.name}
+                          onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
+                          placeholder="Harsh Manmode"
+                          className="w-full bg-white/[0.03] border border-white/10 rounded-xl py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/60 focus:bg-white/[0.06] transition-all font-medium"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold uppercase tracking-wider text-gray-400 ml-0.5">Your Email</label>
+                        <input
+                          type="email"
+                          required
+                          value={formData.email}
+                          onChange={(e) => setFormData(p => ({ ...p, email: e.target.value }))}
+                          placeholder="email@example.com"
+                          className="w-full bg-white/[0.03] border border-white/10 rounded-xl py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/60 focus:bg-white/[0.06] transition-all font-medium"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-gray-400 ml-0.5">Your Message</label>
+                      <textarea
+                        rows={3}
+                        required
+                        value={formData.message}
+                        onChange={(e) => setFormData(p => ({ ...p, message: e.target.value }))}
+                        placeholder="Tell me about your project or vision..."
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl py-2.5 px-3.5 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/60 focus:bg-white/[0.06] transition-all resize-none font-medium"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={status === "loading"}
+                      className={`w-full h-11 font-bold uppercase text-xs tracking-wider rounded-xl transition-all shadow-[0_0_20px_rgba(37,99,235,0.35)] flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed ${
+                        status === "success" ? "bg-emerald-600 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)]" :
+                        status === "error" ? "bg-red-600 text-white" :
+                        "bg-blue-600 hover:bg-blue-500 text-white hover:shadow-[0_0_25px_rgba(37,99,235,0.6)]"
                       }`}
-                  >
-                    {status === "idle" && "Send Message"}
-                    {status === "loading" && "Sending..."}
-                    {status === "success" && "Message Sent!"}
-                    {status === "error" && "Error Sending!"}
-
-                    {status === "idle" && <Send className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
-                    {status === "loading" && <Loader2 className="w-3.5 h-3.5 md:w-4 md:h-4 animate-spin" />}
-                    {status === "success" && <CheckCircle className="w-3.5 h-3.5 md:w-4 md:h-4" />}
-                    {status === "error" && <AlertCircle className="w-3.5 h-3.5 md:w-4 md:h-4" />}
-                  </button>
-                </form>
+                    >
+                      {status === "idle" && (
+                        <>
+                          <span>Send Message</span>
+                          <Send className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </>
+                      )}
+                      {status === "loading" && (
+                        <>
+                          <span>Sending...</span>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        </>
+                      )}
+                      {status === "success" && (
+                        <>
+                          <span>Message Sent!</span>
+                          <CheckCircle className="w-3.5 h-3.5" />
+                        </>
+                      )}
+                      {status === "error" && (
+                        <>
+                          <span>Error Sending</span>
+                          <AlertCircle className="w-3.5 h-3.5" />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

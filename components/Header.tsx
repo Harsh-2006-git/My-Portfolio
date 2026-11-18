@@ -44,29 +44,59 @@ export default function Header() {
   }, [isMenuOpen]);
 
   return (
-    <header className={`fixed top-0 left-0 w-full h-[70px] md:h-[90px] z-[500] flex items-center justify-between px-6 md:px-20 transition-all duration-300 ${scrolled ? "bg-[#03000A]/90 backdrop-blur-md" : "bg-transparent"}`}>
-      <Link href="/" className="flex items-center gap-3 shrink-0 cursor-pointer group">
-        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border border-blue-500/30 group-hover:border-blue-400 group-hover:scale-110 shadow-[0_0_12px_rgba(0,163,255,0.3)] transition-all ring-1 ring-blue-500/20">
+    <header className={`fixed top-0 left-0 w-full h-[62px] sm:h-[72px] lg:h-[96px] z-[500] flex items-center justify-between px-4 sm:px-8 lg:px-16 transition-all duration-300 border-b border-white/10 lg:border-b-0 ${scrolled ? "bg-[#020408]/95 backdrop-blur-md lg:border-b lg:border-white/5" : "bg-[#020408]/80 backdrop-blur-md lg:bg-transparent"}`}>
+      <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 shrink-0 cursor-pointer group">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border border-blue-500/30 group-hover:border-blue-400 group-hover:scale-105 shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all ring-1 ring-blue-500/20 bg-blue-950/40 flex items-center justify-center">
           <img src="/logo3.png" alt="Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
         </div>
-        <p className="text-lg md:text-2xl font-black tracking-widest block font-cinzel bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(0,163,255,0.8)] group-hover:drop-shadow-[0_0_20px_#00A3FF] transition-all">Harsh</p>
+        <p className="text-lg sm:text-xl lg:text-[26px] font-bold tracking-tight text-white flex items-center font-plusJakartaSans">
+          Harsh<span className="text-blue-500">.</span>
+        </p>
       </Link>
 
-      <nav className="absolute left-1/2 -translate-x-1/2 hidden lg:flex items-center gap-1 p-2 bg-white/5 backdrop-blur-3xl rounded-full border border-white/10 shadow-[0_0_20px_rgba(0,163,255,0.3)] hover:shadow-[0_0_30px_rgba(0,163,255,0.5)] transition-all">
+      <nav className="absolute left-1/2 -translate-x-1/2 hidden lg:flex items-center gap-1.5 px-4 py-2 bg-[#0b1120]/80 backdrop-blur-xl rounded-full border border-white/10 shadow-[0_0_25px_rgba(0,0,0,0.5)]">
         {navLinks.map((link) => (
-          <Link key={link.name} href={link.href} className="px-5 py-2 rounded-full text-xs font-extrabold uppercase tracking-[0.2em] text-gray-300 hover:text-white hover:bg-white/10 transition-all relative group font-plusJakartaSans">
-            <span className="group-hover:drop-shadow-[0_0_8px_rgba(0,163,255,0.5)] transition-all">{link.name}</span>
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-gradient-to-r from-blue-600 to-indigo-600 transition-all group-hover:w-[60%] shadow-[0_0_8px_#00A3FF]"></span>
+          <Link
+            key={link.name}
+            href={link.href}
+            className={`px-5 py-2 rounded-full text-sm font-medium tracking-wide transition-all relative ${
+              link.name === "Home" ? "text-white font-semibold" : "text-gray-300 hover:text-white"
+            }`}
+          >
+            <span>{link.name}</span>
+            {link.name === "Home" && (
+              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-5 h-[2.5px] bg-blue-500 rounded-full shadow-[0_0_8px_#3b82f6]"></span>
+            )}
           </Link>
         ))}
       </nav>
 
-      <div className="flex items-center">
+      <div className="flex items-center gap-2 sm:gap-3.5">
+        {/* Mobile Small "Let's Connect" Button */}
+        <Link
+          href="#contact"
+          className="lg:hidden inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-semibold text-white border border-blue-500/30 bg-blue-600/15 hover:bg-blue-600/25 active:scale-95 transition-all shadow-[0_0_10px_rgba(37,99,235,0.2)]"
+        >
+          <span>Connect</span>
+          <span className="text-blue-400 text-xs">↗</span>
+        </Link>
+
+        {/* Desktop "Let's Connect" Button */}
+        <Link
+          href="#contact"
+          className="hidden lg:inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-white border border-white/15 bg-white/[0.04] hover:bg-white/[0.09] hover:border-blue-400/50 transition-all duration-300 shadow-[0_0_18px_rgba(37,99,235,0.2)] group"
+        >
+          <span>Let's Connect</span>
+          <span className="text-blue-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-sm">↗</span>
+        </Link>
+
+        {/* Mobile Compact Hamburger Toggle */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="lg:hidden w-11 h-11 flex items-center justify-center bg-white/5 rounded-full border border-white/10 text-white z-[1200] shadow-[0_0_12px_rgba(0,163,255,0.3)] transition-all active:scale-95"
+          className="lg:hidden w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-full border border-white/10 text-white z-[1200] shadow-[0_0_10px_rgba(0,163,255,0.25)] transition-all active:scale-95"
+          aria-label="Toggle navigation menu"
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMenuOpen ? <X size={17} /> : <Menu size={17} />}
         </button>
       </div>
 
