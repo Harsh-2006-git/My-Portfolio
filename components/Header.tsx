@@ -44,17 +44,17 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full h-[62px] sm:h-[72px] lg:h-[96px] z-[500] flex items-center justify-between px-4 sm:px-8 lg:px-16 transition-all duration-300 border-b border-white/10 lg:border-b-0 ${
+        className={`fixed top-0 left-0 w-full h-[70px] sm:h-[78px] lg:h-[96px] z-[500] flex items-center justify-between px-5 sm:px-8 lg:px-16 transition-all duration-300 border-b border-white/10 lg:border-b-0 ${
           scrolled
             ? "bg-[#020408]/95 backdrop-blur-md lg:border-b lg:border-white/5"
             : "bg-[#020408]/80 backdrop-blur-md lg:bg-transparent"
         }`}
       >
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 shrink-0 cursor-pointer group">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border border-blue-500/30 group-hover:border-blue-400 group-hover:scale-105 shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all ring-1 ring-blue-500/20 bg-blue-950/40 flex items-center justify-center">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border border-blue-500/30 group-hover:border-blue-400 group-hover:scale-105 shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all ring-1 ring-blue-500/20 bg-blue-950/40 flex items-center justify-center">
             <img src="/logo3.png" alt="Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
           </div>
-          <p className="text-lg sm:text-xl lg:text-[26px] font-bold tracking-tight text-white flex items-center font-plusJakartaSans">
+          <p className="text-[19px] sm:text-xl lg:text-[26px] font-bold tracking-tight text-white flex items-center font-plusJakartaSans">
             Harsh<span className="text-blue-500">.</span>
           </p>
         </Link>
@@ -76,11 +76,11 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-3.5">
+        <div className="flex items-center gap-2.5 sm:gap-3.5">
           {/* Mobile Small "Connect" Button */}
           <Link
             href="#contact"
-            className="lg:hidden inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-semibold text-white border border-blue-500/30 bg-blue-600/15 hover:bg-blue-600/25 active:scale-95 transition-all shadow-[0_0_10px_rgba(37,99,235,0.2)]"
+            className="lg:hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-semibold text-white border border-blue-500/30 bg-blue-600/15 hover:bg-blue-600/25 active:scale-95 transition-all shadow-[0_0_10px_rgba(37,99,235,0.2)]"
           >
             <span>Connect</span>
             <span className="text-blue-400 text-xs">↗</span>
@@ -95,13 +95,13 @@ export default function Header() {
             <span className="text-blue-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-sm">↗</span>
           </Link>
 
-          {/* Mobile Compact Hamburger Toggle */}
+          {/* Mobile Hamburger Toggle */}
           <button
             onClick={() => setIsMenuOpen(true)}
-            className="lg:hidden w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-full border border-white/10 text-white z-[1200] shadow-[0_0_10px_rgba(0,163,255,0.25)] transition-all active:scale-95"
+            className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-full border border-white/10 text-white z-[1200] shadow-[0_0_10px_rgba(0,163,255,0.25)] transition-all active:scale-95"
             aria-label="Open navigation menu"
           >
-            <Menu size={17} />
+            <Menu size={19} />
           </button>
         </div>
       </header>

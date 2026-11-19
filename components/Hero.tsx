@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Linkedin,
@@ -62,6 +63,10 @@ export default function Hero({ onExploreProjects }: HeroProps) {
       onExploreProjects();
       return;
     }
+    if (anchor === "#about") {
+      window.location.href = "/about";
+      return;
+    }
     const target = document.querySelector(anchor);
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
@@ -72,7 +77,7 @@ export default function Hero({ onExploreProjects }: HeroProps) {
     <section
       ref={heroRef}
       id="home"
-      className="relative w-full h-[100dvh] max-h-[100dvh] bg-[#020408] flex flex-col justify-between pt-[70px] sm:pt-24 lg:pt-24 pb-3 sm:pb-6 px-5 sm:px-10 lg:px-16 overflow-hidden select-none"
+      className="relative w-full h-[100dvh] max-h-[100dvh] bg-[#020408] flex flex-col justify-between pt-[78px] sm:pt-24 lg:pt-24 pb-3 sm:pb-6 px-5 sm:px-10 lg:px-16 overflow-hidden select-none"
     >
       {/* Interactive Glowing Blue/Cyan Smoke Trail */}
       <SmokeCursor containerRef={heroRef} />
@@ -129,19 +134,19 @@ export default function Hero({ onExploreProjects }: HeroProps) {
         {/* ========================================================================= */}
         <motion.div
           style={{ y: contentY, opacity: contentOpacity }}
-          className="lg:col-span-5 flex flex-col justify-center items-center lg:items-start w-full shrink-0 mt-4 sm:mt-6 lg:mt-0"
+          className="lg:col-span-5 flex flex-col justify-center items-start lg:items-start w-full shrink-0 mt-4 sm:mt-6 lg:mt-0"
         >
-          {/* Inner Content Block: Centered on mobile, flush-left step shape on desktop */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full max-w-full sm:max-w-md lg:max-w-none">
-            {/* Pill Badge: Full-Stack Developer */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#0a1226]/85 border border-blue-500/30 text-[11px] font-semibold text-gray-200 shadow-[0_0_15px_rgba(37,99,235,0.2)] backdrop-blur-md">
+          {/* Inner Content Block: Keeps the iconic flush-left step shape on desktop */}
+          <div className="flex flex-col items-start text-left w-full max-w-[360px] sm:max-w-md lg:max-w-none">
+            {/* Pill Badge: Full-Stack Developer (Desktop only, hidden on mobile) */}
+            <div className="hidden lg:inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#0a1226]/85 border border-blue-500/30 text-[11px] font-semibold text-gray-200 shadow-[0_0_15px_rgba(37,99,235,0.2)] backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_#3b82f6] animate-pulse" />
               <span className="tracking-wide font-plusJakartaSans">Full-Stack Developer</span>
             </div>
 
-            {/* Stacked Headline: Centered and massive on mobile, step-style on desktop */}
+            {/* Stacked Step-Style Headline: HARSH + MANMODE */}
             <h1
-              className="mt-2.5 sm:mt-4 flex flex-col items-center lg:items-start uppercase select-none tracking-tight leading-[0.88] w-full"
+              className="mt-0 lg:mt-4 flex flex-col items-start uppercase select-none tracking-tight leading-[0.88]"
               style={{ fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif', fontWeight: 900 }}
             >
               <span className="text-[54px] min-[375px]:text-[64px] min-[410px]:text-[72px] sm:text-6xl md:text-7xl xl:text-[98px] tracking-tight text-white whitespace-nowrap">
@@ -152,17 +157,17 @@ export default function Hero({ onExploreProjects }: HeroProps) {
               </span>
             </h1>
 
-            {/* Tagline with Left Blue Border Accent on desktop, single line centered on mobile */}
-            <div className="mt-3 sm:mt-5 text-center lg:text-left border-l-0 lg:border-l-2 border-blue-500 pl-0 lg:pl-3.5">
-              <p className="text-[11px] min-[360px]:text-xs sm:text-sm md:text-base text-gray-300 font-medium leading-relaxed font-plusJakartaSans whitespace-nowrap sm:whitespace-normal">
+            {/* Tagline with Left Blue Border Accent: 1 line on mobile, exactly 2 lines on desktop */}
+            <div className="mt-3 sm:mt-5 pl-3.5 border-l-2 border-blue-500">
+              <p className="text-[11px] min-[360px]:text-xs sm:text-sm md:text-base text-gray-300 font-medium leading-relaxed font-plusJakartaSans whitespace-nowrap lg:whitespace-normal">
                 Crafting robust digital products,{" "}
-                <br className="hidden lg:inline" />
+                <br className="hidden lg:block" />
                 from <span className="text-blue-400 font-bold">code to scale</span>.
               </p>
             </div>
 
-            {/* CTA Buttons Row */}
-            <div className="mt-3.5 sm:mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3">
+            {/* CTA Buttons Row: Centered on mobile, flush left on desktop */}
+            <div className="mt-8 sm:mt-9 lg:mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 w-full lg:w-auto">
               <a
                 href="#projects"
                 onClick={(e) => {
@@ -175,16 +180,12 @@ export default function Hero({ onExploreProjects }: HeroProps) {
                 <span className="text-xs sm:text-sm font-black transition-transform group-hover:translate-x-1">→</span>
               </a>
 
-              <a
-                href="#about"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick("#about");
-                }}
+              <Link
+                href="/about"
                 className="flex items-center h-9 sm:h-11 px-5 sm:px-7 bg-white/[0.04] hover:bg-white/[0.09] text-white/90 border border-white/15 text-[11px] sm:text-xs font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:border-blue-400/40 hover:-translate-y-0.5 cursor-pointer whitespace-nowrap backdrop-blur-md"
               >
                 About Me
-              </a>
+              </Link>
             </div>
 
             {/* Social Links Row (Desktop only - under CTA buttons) */}
