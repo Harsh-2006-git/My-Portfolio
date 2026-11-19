@@ -12,6 +12,7 @@ import {
   Code2,
   Database,
   Trophy,
+  FileText,
 } from "lucide-react";
 import SmokeCursor from "@/components/SmokeCursor";
 
@@ -137,7 +138,7 @@ export default function Hero({ onExploreProjects }: HeroProps) {
           className="lg:col-span-5 flex flex-col justify-center items-start lg:items-start w-full shrink-0 mt-4 sm:mt-6 lg:mt-0"
         >
           {/* Inner Content Block: Keeps the iconic flush-left step shape on desktop */}
-          <div className="flex flex-col items-start text-left w-full max-w-[360px] sm:max-w-md lg:max-w-none">
+          <div className="flex flex-col items-start text-left w-full max-w-full sm:max-w-md lg:max-w-none">
             {/* Pill Badge: Full-Stack Developer (Desktop only, hidden on mobile) */}
             <div className="hidden lg:inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#0a1226]/85 border border-blue-500/30 text-[11px] font-semibold text-gray-200 shadow-[0_0_15px_rgba(37,99,235,0.2)] backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_#3b82f6] animate-pulse" />
@@ -166,26 +167,36 @@ export default function Hero({ onExploreProjects }: HeroProps) {
               </p>
             </div>
 
-            {/* CTA Buttons Row: Centered on mobile, flush left on desktop */}
-            <div className="mt-8 sm:mt-9 lg:mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 w-full lg:w-auto">
+            {/* CTA Buttons Row: All 3 buttons in the same single row on mobile, flush left on desktop */}
+            <div className="mt-8 sm:mt-9 lg:mt-6 flex flex-nowrap items-center justify-center lg:justify-start gap-1.5 min-[375px]:gap-2 sm:gap-2.5 lg:gap-3 w-full lg:w-auto">
               <a
                 href="#projects"
                 onClick={(e) => {
                   e.preventDefault();
                   handleNavClick("#projects");
                 }}
-                className="flex items-center gap-2 h-9 sm:h-11 px-5 sm:px-7 bg-blue-600 hover:bg-blue-500 text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase rounded-full shadow-[0_0_25px_rgba(37,99,235,0.45)] hover:shadow-[0_0_35px_rgba(37,99,235,0.7)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer whitespace-nowrap"
+                className="flex items-center gap-1 sm:gap-1.5 h-8 min-[375px]:h-9 sm:h-10 lg:h-11 px-2.5 min-[375px]:px-3.5 sm:px-5 lg:px-6 bg-blue-600 hover:bg-blue-500 text-white text-[10px] min-[375px]:text-[11px] sm:text-xs font-bold tracking-wider uppercase rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.7)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer whitespace-nowrap shrink-0"
               >
-                <span>View Projects</span>
-                <span className="text-xs sm:text-sm font-black transition-transform group-hover:translate-x-1">→</span>
+                <span> Projects</span>
+                <span className="text-[11px] sm:text-xs font-black transition-transform group-hover:translate-x-1">→</span>
               </a>
 
               <Link
                 href="/about"
-                className="flex items-center h-9 sm:h-11 px-5 sm:px-7 bg-white/[0.04] hover:bg-white/[0.09] text-white/90 border border-white/15 text-[11px] sm:text-xs font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:border-blue-400/40 hover:-translate-y-0.5 cursor-pointer whitespace-nowrap backdrop-blur-md"
+                className="flex items-center h-8 min-[375px]:h-9 sm:h-10 lg:h-11 px-2.5 min-[375px]:px-3.5 sm:px-5 lg:px-6 bg-white/[0.04] hover:bg-white/[0.09] text-white/90 border border-white/15 text-[10px] min-[375px]:text-[11px] sm:text-xs font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:border-blue-400/40 hover:-translate-y-0.5 cursor-pointer whitespace-nowrap backdrop-blur-md shrink-0"
               >
                 About Me
               </Link>
+
+              <a
+                href="https://drive.google.com/file/d/1pV8MLAWAf3RVlqR4ZiHvO5cdqiLShA0A/view?usp=drivesdk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 sm:gap-1.5 h-8 min-[375px]:h-9 sm:h-10 lg:h-11 px-2.5 min-[375px]:px-3.5 sm:px-5 lg:px-6 bg-white/[0.04] hover:bg-blue-600/20 text-white/90 hover:text-white border border-white/15 hover:border-blue-400/50 text-[10px] min-[375px]:text-[11px] sm:text-xs font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:-translate-y-0.5 cursor-pointer whitespace-nowrap backdrop-blur-md group shrink-0"
+              >
+                <FileText className="w-3 h-3 min-[375px]:w-3.5 min-[375px]:h-3.5 text-blue-400 group-hover:scale-110 transition-transform" />
+                <span>Resume</span>
+              </a>
             </div>
 
             {/* Social Links Row (Desktop only - under CTA buttons) */}

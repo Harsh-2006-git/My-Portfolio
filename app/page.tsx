@@ -445,21 +445,21 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="pt-4 pb-8">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6">
-            {/* Unified Glassmorphism Box Container */}
-            <div className="relative rounded-3xl bg-[#070b16]/90 border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)] backdrop-blur-xl p-6 sm:p-8 md:p-10 overflow-hidden">
+        <section id="contact" className="pt-4 pb-8 -mx-3 sm:mx-0">
+          <div className="w-full max-w-5xl mx-auto px-0 sm:px-6">
+            {/* Unified Glassmorphism Box Container - Full width and optimized padding for mobile */}
+            <div className="relative rounded-2xl sm:rounded-3xl bg-[#070b16]/90 border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)] backdrop-blur-xl p-4 sm:p-8 md:p-10 overflow-hidden">
               {/* Subtle ambient decorative corner glows */}
               <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-blue-600/[0.08] blur-[90px] pointer-events-none" />
               <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-indigo-600/[0.06] blur-[90px] pointer-events-none" />
 
               {/* Header inside the box */}
-              <div className="relative z-10 max-w-2xl mb-8 md:mb-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-[11px] font-semibold text-blue-400 mb-3 shadow-[0_0_10px_rgba(37,99,235,0.15)]">
+              <div className="relative z-10 max-w-2xl mb-6 sm:mb-8 md:mb-10">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-[10px] sm:text-[11px] font-semibold text-blue-400 mb-2.5 sm:mb-3 shadow-[0_0_10px_rgba(37,99,235,0.15)]">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_6px_#3b82f6] animate-pulse" />
                   <span className="tracking-widest uppercase">Get in Touch</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
+                <h3 className="text-xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
                   Let's Build Something Extraordinary
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-400 font-medium mt-2 leading-relaxed">
@@ -468,10 +468,10 @@ export default function Home() {
               </div>
 
               {/* 2-Column Grid inside the box */}
-              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-stretch">
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-10 items-stretch">
                 {/* Left Column (5 cols): Channels */}
-                <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
-                  <div className="space-y-4">
+                <div className="lg:col-span-5 flex flex-col justify-between space-y-5 sm:space-y-6">
+                  <div className="space-y-3 sm:space-y-4">
                     <h4 className="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
                       <span className="w-1.5 h-3.5 bg-blue-500 rounded-full" />
                       Contact Channels
@@ -480,14 +480,14 @@ export default function Home() {
                     {/* Email Card */}
                     <a
                       href="mailto:harshmanmode79@gmail.com"
-                      className="group p-3.5 sm:p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-blue-500/30 transition-all duration-300 flex items-center gap-3.5 cursor-pointer block"
+                      className="group p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-blue-500/30 transition-all duration-300 flex items-center gap-3 sm:gap-3.5 cursor-pointer block"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 group-hover:bg-blue-500/20 transition-all shrink-0">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 group-hover:bg-blue-500/20 transition-all shrink-0">
                         <Mail className="w-4 h-4" />
                       </div>
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Email Address</p>
-                        <p className="text-xs sm:text-sm font-semibold text-white group-hover:text-blue-400 transition-colors truncate">
+                        <p className="text-xs sm:text-sm font-semibold text-white group-hover:text-blue-400 transition-colors break-all sm:break-normal">
                           harshmanmode79@gmail.com
                         </p>
                       </div>
@@ -496,12 +496,12 @@ export default function Home() {
                     {/* Phone Card */}
                     <a
                       href="tel:+918305721431"
-                      className="group p-3.5 sm:p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-blue-500/30 transition-all duration-300 flex items-center gap-3.5 cursor-pointer block"
+                      className="group p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-blue-500/30 transition-all duration-300 flex items-center gap-3 sm:gap-3.5 cursor-pointer block"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 group-hover:bg-blue-500/20 transition-all shrink-0">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 group-hover:bg-blue-500/20 transition-all shrink-0">
                         <Phone className="w-4 h-4" />
                       </div>
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Phone Number</p>
                         <p className="text-xs sm:text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">
                           +91 83057-21431
@@ -511,7 +511,7 @@ export default function Home() {
                   </div>
 
                   {/* Status Pill / Live Availability */}
-                  <div className="p-3.5 rounded-2xl bg-blue-950/20 border border-blue-500/15 flex items-center gap-3">
+                  <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-blue-950/20 border border-blue-500/15 flex items-center gap-2.5 sm:gap-3">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] animate-pulse shrink-0" />
                     <div>
                       <p className="text-[11px] font-bold text-white">Available for Opportunities</p>
@@ -521,7 +521,7 @@ export default function Home() {
                 </div>
 
                 {/* Right Column (7 cols): Compact Form */}
-                <div className="lg:col-span-7 rounded-2xl bg-white/[0.02] border border-white/[0.08] p-5 sm:p-6 shadow-inner">
+                <div className="lg:col-span-7 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/[0.08] p-3.5 sm:p-6 shadow-inner">
                   <form className="space-y-3.5" onSubmit={handleContactSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                       <div className="space-y-1">
